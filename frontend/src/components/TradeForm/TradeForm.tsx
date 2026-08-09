@@ -11,7 +11,7 @@ import TransactionsTable from './TransactionsTable';
 
 import type { ValidationProblemDetails } from '@/types';
 import type { AlertColor } from '@mui/material';
-import type { Execution, Trade } from '@trade-tracker/shared/types';
+import type { Execution, Trade } from '@trade-scope/shared/types';
 import type { FormEvent, JSX } from 'react';
 
 interface FormStatus {

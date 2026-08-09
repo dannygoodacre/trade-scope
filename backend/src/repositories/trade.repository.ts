@@ -1,4 +1,4 @@
-import { Trade, TradeWithExecutions } from '@trade-tracker/shared/types.ts';
+import { Trade, TradeWithExecutions } from '@trade-scope/shared/types.ts';
 import { DeleteResult } from 'kysely';
 import { jsonArrayFrom } from 'kysely/helpers/sqlite';
 

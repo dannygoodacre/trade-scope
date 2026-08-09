@@ -1,6 +1,6 @@
-import { Side } from '@trade-tracker/shared/enums';
-import { TradeDataShape } from '@trade-tracker/shared/schemata';
-import { ExecutionData } from '@trade-tracker/shared/types';
+import { Side } from '@trade-scope/shared/enums';
+import { TradeDataShape } from '@trade-scope/shared/schemata/trade.schema';
+import { ExecutionData } from '@trade-scope/shared/types';
 import { z } from 'zod';
 
 import { CreateExecutionRequestSchema } from '@/schemata/execution.schema';

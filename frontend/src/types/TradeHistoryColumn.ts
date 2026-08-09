@@ -1,4 +1,4 @@
-import type { Trade } from '@trade-tracker/shared/types';
+import type { Trade } from '@trade-scope/shared/types';
 
 export interface TradeHistoryColumn {
   field: Extract<keyof Trade, string | number>;

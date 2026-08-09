@@ -1,4 +1,4 @@
-import { Side } from '@trade-tracker/shared/enums';
+import { Side } from '@trade-scope/shared/enums';
 import { z } from 'zod';
 
 export const ExecutionDataShape = z.strictObject({

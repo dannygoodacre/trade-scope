@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button, Tooltip } from '@mui/material';
-import { Side } from '@trade-tracker/shared/enums.ts';
+import { Side } from '@trade-scope/shared/enums.ts';
 
 interface SideToggleButtonProps {
   id: number;

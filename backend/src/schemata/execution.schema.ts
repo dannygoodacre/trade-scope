@@ -1,6 +1,6 @@
-import { ExecutionDataShape } from '@trade-tracker/shared/schemata';
+import { ExecutionDataShape } from '@trade-scope/shared/schemata/execution.schema';
 
-import type { ExecutionData } from '@trade-tracker/shared/types';
+import type { ExecutionData } from '@trade-scope/shared/types';
 
 export const CreateExecutionRequestSchema = ExecutionDataShape.refine(filledIsLeqThanOrder, {
   message: "'filled' must be less than or equal to 'order'",

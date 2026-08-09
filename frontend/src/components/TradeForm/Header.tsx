@@ -8,7 +8,7 @@ import { isNullEmptyOrWhitespace } from '@/utils';
 
 import * as headerStyles from './Header.styles';
 
-import type { Trade } from '@trade-tracker/shared/types';
+import type { Trade } from '@trade-scope/shared/types';
 import type { ChangeEvent } from 'react';
 
 interface TradeFormHeaderProps {

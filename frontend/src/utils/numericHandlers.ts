@@ -4,7 +4,7 @@ import type { ChangeEvent } from 'react';
 
 export const numericChangeHandler =
   (type: 'int' | 'float', setValue: (value: string) => void, onParsed: (value: number) => void) =>
-  (event: ChangeEvent<HTMLInputElement>) => {
+  (event: ChangeEvent<HTMLInputElement>): void => {
     const value = event.target.value;
 
     const regex = type === 'float' ? /^\d*\.?\d*$/ : /^\d*$/;
@@ -22,7 +22,7 @@ export const numericChangeHandler =
     }
   };
 
-export const numericBlurHandler = (value: string, setValue: (value: string) => void) => () => {
+export const numericBlurHandler = (value: string, setValue: (value: string) => void) => (): void => {
   if (value !== '') {
     setValue(formatWithCommas(value.replace(/,/g, '')));
   }

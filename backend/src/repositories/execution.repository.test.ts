@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'node:path';
-import { Side } from '@trade-tracker/shared/enums';
+import { Side } from '@trade-scope/shared/enums';
 import Database from 'better-sqlite3';
 import { Kysely, SqliteDialect } from 'kysely';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';

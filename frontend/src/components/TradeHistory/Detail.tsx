@@ -12,7 +12,7 @@ import {
   Typography
 } from '@mui/material';
 
-import type { TradeWithExecutions } from '@trade-tracker/shared/types';
+import type { TradeWithExecutions } from '@trade-scope/shared/types';
 
 interface DetailProps {
   trade: TradeWithExecutions;

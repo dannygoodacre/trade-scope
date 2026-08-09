@@ -4,8 +4,8 @@ import dayjs from 'dayjs';
 import { SideToggleButton, TimePicker } from '@/components';
 import NumberInput from '@/components/common/NumberInput.tsx';
 
-import type { Side } from '@trade-tracker/shared/enums';
-import type { Execution } from '@trade-tracker/shared/types';
+import type { Side } from '@trade-scope/shared/enums';
+import type { Execution } from '@trade-scope/shared/types';
 import type { Dayjs } from 'dayjs';
 
 interface TransactionRowProps {

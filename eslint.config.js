@@ -39,7 +39,7 @@ export default defineConfig([
     }
   },
   {
-    files: ['**/*.tsx', 'src/hooks/**/*.ts'],
+    files: ['**/*.tsx', 'frontend/src/hooks/**/*.ts', 'frontend/**/*.styles.ts'],
     rules: {
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off'

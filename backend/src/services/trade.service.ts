@@ -1,4 +1,4 @@
-import { ExecutionData, PaginatedTradesResponse, TradeData } from '@trade-tracker/shared/types';
+import { ExecutionData, PaginatedTradesResponse, TradeData } from '@trade-scope/shared/types';
 
 import { database } from '@/database';
 import { NotFoundError } from '@/error';

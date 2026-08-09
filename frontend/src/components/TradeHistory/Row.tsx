@@ -8,7 +8,7 @@ import { foo } from '@/utils/numberFormatters.ts';
 
 import Detail from './Detail';
 
-import type { TradeWithExecutions } from '@trade-tracker/shared/types';
+import type { TradeWithExecutions } from '@trade-scope/shared/types';
 
 interface TradeRowProps {
   trade: TradeWithExecutions;

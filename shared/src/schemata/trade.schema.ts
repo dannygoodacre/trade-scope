@@ -1,4 +1,4 @@
-import { ExecutionShape } from '@trade-tracker/shared/schemata';
+import { ExecutionShape } from '@trade-scope/shared/schemata';
 import { z } from 'zod';
 
 export const TradeDataShape = z.strictObject({

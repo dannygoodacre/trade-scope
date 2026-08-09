@@ -4,7 +4,7 @@ import {
   TradeDataShape,
   TradeShape,
   TradeWithExecutionsShape
-} from '@trade-tracker/shared/schemata';
+} from '@trade-scope/shared/schemata';
 import { z } from 'zod';
 
 export type ExecutionData = z.infer<typeof ExecutionDataShape>;

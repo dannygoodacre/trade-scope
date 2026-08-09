@@ -1,6 +1,6 @@
 import { get, post } from './client.ts';
 
-import type { ExecutionData, PaginatedTradesResponse, TradeData } from '@trade-tracker/shared/types';
+import type { ExecutionData, PaginatedTradesResponse, TradeData } from '@trade-scope/shared/types';
 
 export const addTrade = (trade: TradeData, executionsData: ExecutionData[]): Promise<void> =>
   post<void>('/api/trades', {

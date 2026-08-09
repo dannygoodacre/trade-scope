@@ -13,7 +13,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
-      '@trade-tracker/shared': path.resolve(__dirname, '../shared/src')
+      '@trade-scope/shared': path.resolve(__dirname, '../shared/src')
     }
   }
 });

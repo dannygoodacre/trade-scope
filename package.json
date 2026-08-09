@@ -1,6 +1,7 @@
 {
   "name": "trade-scope",
   "private": true,
+  "type": "module",
   "workspaces": [
     "./*"
   ],
@@ -8,7 +9,7 @@
     "dev": "concurrently -n \"frontend,backend\" -c \"cyan,yellow\" \"npm run dev -w @trade-scope/frontend\" \"npm run dev -w @trade-scope/backend\"",
     "dev:frontend": "npm run dev -w @trade-tracker/frontend",
     "dev:backend": "npm run dev -w @trade-tracker/backend",
-    "lint": "npm run lint --workspaces --if-present",
+    "lint": "eslint .",
     "prettier": "prettier --write .",
     "prettier:check": "prettier --check ."
   },

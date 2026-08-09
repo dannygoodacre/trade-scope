@@ -15,8 +15,8 @@ import TransactionsTableToolbar from '@/components/TradeForm/TransactionsTableTo
 
 import TransactionRow from './TransactionRow';
 
-import type { Side } from '@trade-tracker/shared/enums';
-import type { Execution } from '@trade-tracker/shared/types';
+import type { Side } from '@trade-scope/shared/enums';
+import type { Execution } from '@trade-scope/shared/types';
 import type { Dayjs } from 'dayjs';
 import type { ChangeEvent } from 'react';
 
@@ -29,7 +29,6 @@ interface TransactionsTableProps {
 export default function TransactionsTable({ executions, setExecutions, isSubmitted }: TransactionsTableProps) {
   const [selected, setSelected] = useState<number[]>([]);
 
-  // Auto-populate initial row if executions list is empty
   useEffect(() => {
     if (executions.length === 0) {
       setExecutions([
@@ -43,7 +42,7 @@ export default function TransactionsTable({ executions, setExecutions, isSubmitt
         }
       ]);
     }
-  }, []); // Runs on mount
+  }, [setExecutions, executions]);
 
   const addTransaction = useCallback(() => {
     const nextId = executions.length > 0 ? Math.max(...executions.map(t => t.id)) + 1 : 1;
@@ -59,7 +58,7 @@ export default function TransactionsTable({ executions, setExecutions, isSubmitt
         madeAt: ''
       }
     ]);
-  }, [executions]);
+  }, [setExecutions, executions]);
 
   const handleChange = (id: number, fieldName: string, value: string | number | Side | Dayjs) => {
     const newTransactions = executions.map(transaction => {
