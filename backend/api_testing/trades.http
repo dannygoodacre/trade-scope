@@ -1,0 +1,33 @@
+### Create trade
+POST http://localhost:3000/api/trades
+Content-Type: application/json
+
+{
+  "date": "2025-02-01",
+  "float": 3000,
+  "sector": "Technology",
+  "symbol": "AAPL",
+  "volume": 50000,
+  "executions": [
+    {
+      "filled": 10,
+      "madeAt": "foo",
+      "order": 8,
+      "price": "1.23",
+      "side": 1
+    },
+    {
+      "filled": 10,
+      "madeAt": "2025-02-01T00:00:00Z",
+      "order": 8,
+      "price": "1.2",
+      "side": 0
+    }
+  ]
+}
+
+### Get trade count
+GET http://localhost:3000/api/trades/count
+
+### Delete trade
+DELETE http://localhost:3000/api/trades/35

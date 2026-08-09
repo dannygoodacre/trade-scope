@@ -1,0 +1,7 @@
+{
+  "name": "trade-tracker",
+  "private": true,
+  "workspaces": [
+    "./*"
+  ]
+}
