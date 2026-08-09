@@ -12,10 +12,10 @@ export const heroCard: SxProps<Theme> = {
 export const heroTitle: SxProps<Theme> = {
   display: 'flex',
   alignItems: 'center',
-  gap: 1,
+  gap: 1
 };
 
 export const heroDescription: SxProps<Theme> = {
   maxWidth: 500,
-  mb: 4,
+  mb: 4
 };

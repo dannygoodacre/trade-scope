@@ -1,14 +1,15 @@
 import { z } from 'zod';
+
 import 'dotenv/config';
 
 export const ConfigSchema = z
   .object({
     PORT: z.coerce.number().int(),
-    DATABASE_CONNECTION_STRING: z.string(),
+    DATABASE_CONNECTION_STRING: z.string()
   })
   .transform(config => ({
     port: config.PORT,
-    databaseConnectionString: config.DATABASE_CONNECTION_STRING,
+    databaseConnectionString: config.DATABASE_CONNECTION_STRING
   }));
 
 const result = ConfigSchema.safeParse(process.env);

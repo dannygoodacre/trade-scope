@@ -1,6 +1,11 @@
+import {
+  ExecutionDataShape,
+  ExecutionShape,
+  TradeDataShape,
+  TradeShape,
+  TradeWithExecutionsShape
+} from '@trade-tracker/shared/schemata';
 import { z } from 'zod';
-
-import { ExecutionDataShape, ExecutionShape, TradeDataShape, TradeShape, TradeWithExecutionsShape } from '@trade-tracker/shared/schemata';
 
 export type ExecutionData = z.infer<typeof ExecutionDataShape>;
 

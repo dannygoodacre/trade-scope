@@ -1,10 +1,12 @@
-import { describe, it, expect, beforeAll, beforeEach, afterAll } from 'vitest';
-import { addTrade, deleteTrade, tradeExists } from './trade.repository';
-import * as path from 'path';
 import * as fs from 'fs';
-import { Kysely, SqliteDialect } from 'kysely';
+import * as path from 'path';
 import Database from 'better-sqlite3';
+import { Kysely, SqliteDialect } from 'kysely';
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
+
 import { DB } from '@/database/db';
+
+import { addTrade, deleteTrade, tradeExists } from './trade.repository';
 
 describe('Trade Repository', () => {
   let database: Kysely<DB>;
@@ -20,8 +22,8 @@ describe('Trade Repository', () => {
 
     database = new Kysely<DB>({
       dialect: new SqliteDialect({
-        database: rawSqlite,
-      }),
+        database: rawSqlite
+      })
     });
   });
 
@@ -44,7 +46,7 @@ describe('Trade Repository', () => {
         volume: 456,
         sector: 'Input Sector',
         news: 'Input News',
-        newsTime: 'Input News Time',
+        newsTime: 'Input News Time'
       };
 
       // Act
@@ -59,11 +61,7 @@ describe('Trade Repository', () => {
 
       expect(trade).toStrictEqual({ id: trade.id, ...newTrade });
 
-      const tradeInDb = await database
-      .selectFrom('trades')
-      .selectAll()
-      .where('id', '=', trade.id)
-      .executeTakeFirst();
+      const tradeInDb = await database.selectFrom('trades').selectAll().where('id', '=', trade.id).executeTakeFirst();
 
       expect(tradeInDb).toStrictEqual({ id: trade.id, ...newTrade });
     });
@@ -80,7 +78,7 @@ describe('Trade Repository', () => {
           volume: 456,
           sector: 'Input Sector 1',
           news: 'Input News 1',
-          newsTime: 'Input News Time 1',
+          newsTime: 'Input News Time 1'
         },
         {
           symbol: 'Input Symbol 2',
@@ -89,38 +87,31 @@ describe('Trade Repository', () => {
           volume: 101,
           sector: 'Input Sector 2',
           news: 'Input News 2',
-          newsTime: 'Input News Time 2',
-        },
+          newsTime: 'Input News Time 2'
+        }
       ];
 
       const { id: trade1Id } = await database
-      .insertInto('trades')
-      .values(newTrades[0])
-      .returning('id')
-      .executeTakeFirstOrThrow();
+        .insertInto('trades')
+        .values(newTrades[0])
+        .returning('id')
+        .executeTakeFirstOrThrow();
 
       const { id: trade2Id } = await database
-      .insertInto('trades')
-      .values(newTrades[1])
-      .returning('id')
-      .executeTakeFirstOrThrow();
+        .insertInto('trades')
+        .values(newTrades[1])
+        .returning('id')
+        .executeTakeFirstOrThrow();
 
       // Act
       await deleteTrade(trade1Id, database);
 
       // Assert
-      const trade1 = await database
-      .selectFrom('trades')
-      .select('id')
-      .where('id', '=', trade1Id)
-      .executeTakeFirst();
+      const trade1 = await database.selectFrom('trades').select('id').where('id', '=', trade1Id).executeTakeFirst();
 
       expect(trade1).toBeUndefined();
 
-      const tradesInDb = await database
-      .selectFrom('trades')
-      .select('id')
-      .execute();
+      const tradesInDb = await database.selectFrom('trades').select('id').execute();
 
       expect(tradesInDb).toHaveLength(1);
 
@@ -138,14 +129,10 @@ describe('Trade Repository', () => {
         volume: 456,
         sector: 'Input Sector',
         news: 'Input News',
-        newsTime: 'Input News Time',
+        newsTime: 'Input News Time'
       };
 
-      const { id } = await database
-      .insertInto('trades')
-      .values(newTrade)
-      .returning('id')
-      .executeTakeFirstOrThrow();
+      const { id } = await database.insertInto('trades').values(newTrade).returning('id').executeTakeFirstOrThrow();
 
       // Act
       const result = await tradeExists(id, database);

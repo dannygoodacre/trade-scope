@@ -1,5 +1,6 @@
 import { Box } from '@mui/material';
-import { TradeHistory, TopBar } from '@/components';
+
+import { TopBar, TradeHistory } from '@/components';
 import * as styles from '@/styles';
 
 export default function Trades() {
@@ -7,7 +8,7 @@ export default function Trades() {
     <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <TopBar />
 
-      <Box component="main" sx={{ ...styles.container, flex: 1, p: 4 }}>
+      <Box component='main' sx={{ ...styles.container, flex: 1, p: 4 }}>
         <TradeHistory />
       </Box>
     </Box>

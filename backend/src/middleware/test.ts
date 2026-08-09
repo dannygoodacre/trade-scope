@@ -14,9 +14,10 @@ interface RFC9457ProblemDetails {
 }
 
 export function mapZodErrorToProblemDetails(err: ZodError, instanceUri?: string): RFC9457ProblemDetails {
-  const detail = err.issues.length === 1
-    ? `Validation failed: ${err.issues[0].message}`
-    : `${err.issues.length} validation errors occurred.`;
+  const detail =
+    err.issues.length === 1
+      ? `Validation failed: ${err.issues[0].message}`
+      : `${err.issues.length} validation errors occurred.`;
 
   return {
     type: 'TODO: a URL providing some validation error information',
@@ -25,10 +26,8 @@ export function mapZodErrorToProblemDetails(err: ZodError, instanceUri?: string)
     detail: detail,
     instance: instanceUri,
     errors: err.issues.map(issue => ({
-      pointer: issue.path.length > 0
-        ? `/${issue.path.join('/')}`
-        : '/',
-      message: issue.message,
-    })),
+      pointer: issue.path.length > 0 ? `/${issue.path.join('/')}` : '/',
+      message: issue.message
+    }))
   };
 }

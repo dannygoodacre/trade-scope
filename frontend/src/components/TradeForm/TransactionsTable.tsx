@@ -1,12 +1,24 @@
-import { useCallback, useEffect, useState, type ChangeEvent } from 'react';
-
-import type { Dayjs } from 'dayjs';
-import { Checkbox, FormControl, FormHelperText, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+import { useCallback, useEffect, useState } from 'react';
+import {
+  Checkbox,
+  FormControl,
+  FormHelperText,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow
+} from '@mui/material';
 
 import TransactionsTableToolbar from '@/components/TradeForm/TransactionsTableToolbar.tsx';
+
 import TransactionRow from './TransactionRow';
-import type { Execution } from '@trade-tracker/shared/types';
+
 import type { Side } from '@trade-tracker/shared/enums';
+import type { Execution } from '@trade-tracker/shared/types';
+import type { Dayjs } from 'dayjs';
+import type { ChangeEvent } from 'react';
 
 interface TransactionsTableProps {
   executions: Execution[];
@@ -15,7 +27,6 @@ interface TransactionsTableProps {
 }
 
 export default function TransactionsTable({ executions, setExecutions, isSubmitted }: TransactionsTableProps) {
-
   const [selected, setSelected] = useState<number[]>([]);
 
   // Auto-populate initial row if executions list is empty
@@ -35,9 +46,7 @@ export default function TransactionsTable({ executions, setExecutions, isSubmitt
   }, []); // Runs on mount
 
   const addTransaction = useCallback(() => {
-    const nextId = executions.length > 0
-      ? Math.max(...executions.map((t) => t.id)) + 1
-      : 1;
+    const nextId = executions.length > 0 ? Math.max(...executions.map(t => t.id)) + 1 : 1;
 
     setExecutions([
       ...executions,
@@ -72,14 +81,14 @@ export default function TransactionsTable({ executions, setExecutions, isSubmitt
     if (selected.indexOf(id) === -1) {
       newSelected = newSelected.concat(selected, id);
     } else {
-      newSelected = selected.filter((transactionId) => transactionId !== id);
+      newSelected = selected.filter(transactionId => transactionId !== id);
     }
 
     setSelected(newSelected);
   };
 
   const handleDelete = () => {
-    setExecutions(executions.filter((transaction) => !selected.includes(transaction.id)));
+    setExecutions(executions.filter(transaction => !selected.includes(transaction.id)));
 
     setSelected([]);
   };
@@ -90,22 +99,22 @@ export default function TransactionsTable({ executions, setExecutions, isSubmitt
       return;
     }
 
-    setSelected(executions.map((n) => n.id));
+    setSelected(executions.map(n => n.id));
   };
 
   const isSelected = (id: number) => selected.indexOf(id) !== -1;
 
   return (
     <FormControl error={isSubmitted && executions.length < 2} fullWidth>
-      <Paper variant="outlined" sx={{ borderColor: isSubmitted && executions.length < 2 ? 'error.main' : undefined }}>
+      <Paper variant='outlined' sx={{ borderColor: isSubmitted && executions.length < 2 ? 'error.main' : undefined }}>
         <TransactionsTableToolbar selected={selected} addTransaction={addTransaction} handleDelete={handleDelete} />
 
-        <Table size="small">
+        <Table size='small'>
           <TableHead>
             <TableRow>
-              <TableCell padding="checkbox">
+              <TableCell padding='checkbox'>
                 <Checkbox
-                  color="primary"
+                  color='primary'
                   indeterminate={selected.length > 0 && selected.length < executions.length}
                   checked={executions.length > 0 && selected.length === executions.length}
                   onChange={handleSelectAllClick}
@@ -120,7 +129,7 @@ export default function TransactionsTable({ executions, setExecutions, isSubmitt
           </TableHead>
 
           <TableBody>
-            {executions.map((transaction) =>
+            {executions.map(transaction => (
               <TransactionRow
                 key={transaction.id}
                 transaction={transaction}
@@ -128,16 +137,12 @@ export default function TransactionsTable({ executions, setExecutions, isSubmitt
                 onChange={handleChange}
                 onClick={handleClick}
               />
-            )}
+            ))}
           </TableBody>
         </Table>
       </Paper>
 
-      {isSubmitted && executions.length < 2 && (
-        <FormHelperText>
-          At least two transactions are required
-        </FormHelperText>
-      )}
+      {isSubmitted && executions.length < 2 && <FormHelperText>At least two transactions are required</FormHelperText>}
     </FormControl>
   );
 }

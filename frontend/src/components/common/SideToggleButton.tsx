@@ -1,5 +1,4 @@
 import { useState } from 'react';
-
 import { Button, Tooltip } from '@mui/material';
 import { Side } from '@trade-tracker/shared/enums.ts';
 
@@ -24,9 +23,7 @@ export default function SideToggleButton({ id, onToggle }: SideToggleButtonProps
   // TODO: buy green, sell red
   return (
     <Tooltip title={`Switch to ${label === 'BUY' ? 'SELL' : 'BUY'}`}>
-      <Button onClick={handleToggle}>
-        {label}
-      </Button>
+      <Button onClick={handleToggle}>{label}</Button>
     </Tooltip>
   );
 }

@@ -7,19 +7,19 @@ export default [
       ecmaVersion: 2022,
       sourceType: 'module',
       globals: {
-        node: true,
-      },
+        node: true
+      }
     },
     rules: {
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
       '@typescript-eslint/no-explicit-any': 'off',
       'prefer-const': 'error',
-      'semi': ['error', 'always'],
-      'quotes': ['error', 'single', { avoidEscape: true }],
-      'comma-dangle': ['error', 'always-multiline'],
-    },
+      semi: ['error', 'always'],
+      quotes: ['error', 'single', { avoidEscape: true }],
+      'comma-dangle': ['error', 'always-multiline']
+    }
   },
   {
-    ignores: ['dist/**', 'build/**', '*.db'],
-  },
+    ignores: ['dist/**', 'build/**', '*.db']
+  }
 ];

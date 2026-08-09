@@ -1,11 +1,12 @@
-import dayjs from 'dayjs';
-import type { Dayjs } from 'dayjs';
 import { Checkbox, TableCell, TableRow } from '@mui/material';
+import dayjs from 'dayjs';
 
 import { SideToggleButton, TimePicker } from '@/components';
-import NumberInput from '@/components/NumberInput';
+import NumberInput from '@/components/common/NumberInput.tsx';
+
 import type { Side } from '@trade-tracker/shared/enums';
 import type { Execution } from '@trade-tracker/shared/types';
+import type { Dayjs } from 'dayjs';
 
 interface TransactionRowProps {
   transaction: Execution;
@@ -15,40 +16,28 @@ interface TransactionRowProps {
 }
 
 export default function TransactionRow({ transaction, isSelected, onChange, onClick }: TransactionRowProps) {
-  const handleTimeChange = (value: Dayjs | null) =>
-    onChange(transaction.id, 'madeAt', value?.toISOString() ?? '');
+  const handleTimeChange = (value: Dayjs | null) => onChange(transaction.id, 'madeAt', value?.toISOString() ?? '');
 
   const monospaceInputSx = {
-    '& .MuiInputBase-input': { fontFamily: 'monospace' },
+    '& .MuiInputBase-input': { fontFamily: 'monospace' }
   };
 
   return (
-    <TableRow
-      hover
-      role="checkbox"
-      tabIndex={-1}
-      key={transaction.id}
-      selected={isSelected}
-    >
-      <TableCell padding="checkbox">
-        <Checkbox
-          color="primary"
-          checked={isSelected}
-          onClick={() => onClick(transaction.id)}
-        />
+    <TableRow hover role='checkbox' tabIndex={-1} key={transaction.id} selected={isSelected}>
+      <TableCell padding='checkbox'>
+        <Checkbox color='primary' checked={isSelected} onClick={() => onClick(transaction.id)} />
       </TableCell>
 
       <TableCell>
-        <SideToggleButton
-          id={transaction.id}
-          onToggle={(id, value) => onChange(id, 'side', value)}
-        />
+        <SideToggleButton id={transaction.id} onToggle={(id, value) => onChange(id, 'side', value)} />
       </TableCell>
 
       <TableCell>
         <NumberInput
-          value={typeof transaction.price === 'number' ? transaction.price : parseFloat(transaction.price as string) || 0}
-          onChange={(val) => onChange(transaction.id, 'price', val)}
+          value={
+            typeof transaction.price === 'number' ? transaction.price : parseFloat(transaction.price as string) || 0
+          }
+          onChange={val => onChange(transaction.id, 'price', val)}
           sx={monospaceInputSx}
         />
       </TableCell>
@@ -57,7 +46,7 @@ export default function TransactionRow({ transaction, isSelected, onChange, onCl
         <NumberInput
           value={transaction.order}
           step={1}
-          onChange={(val) => onChange(transaction.id, 'order', val)}
+          onChange={val => onChange(transaction.id, 'order', val)}
           sx={monospaceInputSx}
         />
       </TableCell>
@@ -66,7 +55,7 @@ export default function TransactionRow({ transaction, isSelected, onChange, onCl
         <NumberInput
           value={transaction.filled}
           step={1}
-          onChange={(val) => onChange(transaction.id, 'filled', val)}
+          onChange={val => onChange(transaction.id, 'filled', val)}
           sx={monospaceInputSx}
         />
       </TableCell>

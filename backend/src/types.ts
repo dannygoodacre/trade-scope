@@ -1,9 +1,19 @@
 import { Request } from 'express';
 import { z } from 'zod';
-import { CreateTradeRequestSchema, CreateTradeSchema, DeleteTradeRequestSchema, GetTradeRequestSchema } from '@/schemata/trade.schema';
 
-export type TypedRequest<T extends { body?: any; query?: any; params?: any }>
-  = Request<T['params'], any, T['body'], T['query']>;
+import {
+  CreateTradeRequestSchema,
+  CreateTradeSchema,
+  DeleteTradeRequestSchema,
+  GetTradeRequestSchema
+} from '@/schemata/trade.schema';
+
+export type TypedRequest<T extends { body?: any; query?: any; params?: any }> = Request<
+  T['params'],
+  any,
+  T['body'],
+  T['query']
+>;
 
 export type CreateTradeInput = z.infer<typeof CreateTradeSchema>;
 

@@ -1,37 +1,29 @@
-import type { ChangeEvent } from 'react';
 import { formatWithCommas, sanitizeAndParseFloat, sanitizeAndParseInteger } from '@/utils/index.ts';
 
-export const numericChangeHandler = (
-  type: 'int' | 'float',
-  setValue: (value: string) => void,
-  onParsed: (value: number) => void
-) => (event: ChangeEvent<HTMLInputElement>) => {
-  const value = event.target.value;
+import type { ChangeEvent } from 'react';
 
-  const regex = type === 'float'
-    ? /^\d*\.?\d*$/
-    : /^\d*$/;
+export const numericChangeHandler =
+  (type: 'int' | 'float', setValue: (value: string) => void, onParsed: (value: number) => void) =>
+  (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
 
-  if (!regex.test(value)) {
-    return;
-  }
+    const regex = type === 'float' ? /^\d*\.?\d*$/ : /^\d*$/;
 
-  setValue(value);
+    if (!regex.test(value)) {
+      return;
+    }
 
-  const parsed = type === 'float'
-    ? sanitizeAndParseFloat(value)
-    : sanitizeAndParseInteger(value);
+    setValue(value);
 
-  if (parsed !== null) {
-    onParsed(parsed);
-  }
-}
+    const parsed = type === 'float' ? sanitizeAndParseFloat(value) : sanitizeAndParseInteger(value);
 
-export const numericBlurHandler = (
-  value: string,
-  setValue: (value: string) => void
-) => () => {
+    if (parsed !== null) {
+      onParsed(parsed);
+    }
+  };
+
+export const numericBlurHandler = (value: string, setValue: (value: string) => void) => () => {
   if (value !== '') {
     setValue(formatWithCommas(value.replace(/,/g, '')));
   }
-}
+};

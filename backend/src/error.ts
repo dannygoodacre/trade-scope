@@ -6,6 +6,4 @@ export abstract class AppError extends Error {
   }
 }
 
-export class NotFoundError extends AppError {
-
-}
+export class NotFoundError extends AppError {}

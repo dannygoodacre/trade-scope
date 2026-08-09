@@ -1,14 +1,11 @@
 import { Router } from 'express';
 import { type ZodType } from 'zod';
+
 import { methodsAllowed, validate } from '@/middleware/routing';
 
-type EndpointConfig = [
-  method: 'get' | 'post' | 'put' | 'delete' | 'patch',
-  schema: ZodType,
-  handler: any,
- ];
+type EndpointConfig = [method: 'get' | 'post' | 'put' | 'delete' | 'patch', schema: ZodType, handler: any];
 
-export function buildRoutes(routes: Record<string, EndpointConfig[]>) : Router {
+export function buildRoutes(routes: Record<string, EndpointConfig[]>): Router {
   const router = Router();
 
   for (const [path, configs] of Object.entries(routes)) {

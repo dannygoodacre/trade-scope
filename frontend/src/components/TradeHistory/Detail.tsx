@@ -1,5 +1,17 @@
 import { useMemo } from 'react';
-import { TableRow, TableCell, Collapse, Typography, TableHead, Table, TableBody, Chip, Box, Paper } from '@mui/material';
+import {
+  Box,
+  Chip,
+  Collapse,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Typography
+} from '@mui/material';
+
 import type { TradeWithExecutions } from '@trade-tracker/shared/types';
 
 interface DetailProps {
@@ -9,13 +21,11 @@ interface DetailProps {
 
 export default function Detail({ trade, isOpen }: DetailProps) {
   const sortedExecutions = useMemo(() => {
-    return [...trade.executions].sort(
-      (a, b) => new Date(a.madeAt).getTime() - new Date(b.madeAt).getTime()
-    );
+    return [...trade.executions].sort((a, b) => new Date(a.madeAt).getTime() - new Date(b.madeAt).getTime());
   }, [trade.executions]);
 
   return (
-    <Collapse in={isOpen} timeout="auto" unmountOnExit>
+    <Collapse in={isOpen} timeout='auto' unmountOnExit>
       <Paper
         elevation={0}
         sx={{
@@ -24,28 +34,37 @@ export default function Detail({ trade, isOpen }: DetailProps) {
           backgroundColor: 'background.default',
           border: '1px solid',
           borderColor: 'divider',
-          borderRadius: 1.5,
+          borderRadius: 1.5
         }}
       >
-        <Table size="small" sx={{ mb: trade.news ? 2 : 0 }}>
+        <Table size='small' sx={{ mb: trade.news ? 2 : 0 }}>
           <TableHead>
             <TableRow>
               <TableCell sx={{ color: 'text.secondary', fontWeight: 600 }}>Time</TableCell>
-              <TableCell align="center" sx={{ color: 'text.secondary', fontWeight: 600 }}>Side</TableCell>
-              <TableCell align="right" sx={{ color: 'text.secondary', fontWeight: 600 }}>Price</TableCell>
-              <TableCell align="right" sx={{ color: 'text.secondary', fontWeight: 600 }}>Order Qty</TableCell>
-              <TableCell align="right" sx={{ color: 'text.secondary', fontWeight: 600 }}>Filled Qty</TableCell>
+
+              <TableCell align='center' sx={{ color: 'text.secondary', fontWeight: 600 }}>
+                Side
+              </TableCell>
+
+              <TableCell align='right' sx={{ color: 'text.secondary', fontWeight: 600 }}>
+                Price
+              </TableCell>
+
+              <TableCell align='right' sx={{ color: 'text.secondary', fontWeight: 600 }}>
+                Order Qty
+              </TableCell>
+
+              <TableCell align='right' sx={{ color: 'text.secondary', fontWeight: 600 }}>
+                Filled Qty
+              </TableCell>
             </TableRow>
           </TableHead>
 
           <TableBody>
-            {sortedExecutions.map((execution) => {
+            {sortedExecutions.map(execution => {
               const isBuy = execution.side === 0;
               return (
-                <TableRow
-                  key={execution.id}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
+                <TableRow key={execution.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                   <TableCell sx={{ fontFamily: 'monospace', fontSize: '0.8125rem' }}>
                     {new Date(execution.madeAt).toLocaleTimeString(undefined, {
                       hour: '2-digit',
@@ -54,10 +73,11 @@ export default function Detail({ trade, isOpen }: DetailProps) {
                       hour12: false
                     })}
                   </TableCell>
-                  <TableCell align="center">
+
+                  <TableCell align='center'>
                     <Chip
-                      label={isBuy ? "BUY" : "SELL"}
-                      size="small"
+                      label={isBuy ? 'BUY' : 'SELL'}
+                      size='small'
                       sx={{
                         width: 52,
                         height: 20,
@@ -77,13 +97,16 @@ export default function Detail({ trade, isOpen }: DetailProps) {
                       }}
                     />
                   </TableCell>
-                  <TableCell align="right" sx={{ fontFamily: 'monospace', fontSize: '0.8125rem' }}>
+
+                  <TableCell align='right' sx={{ fontFamily: 'monospace', fontSize: '0.8125rem' }}>
                     {execution.price}
                   </TableCell>
-                  <TableCell align="right" sx={{ fontFamily: 'monospace', fontSize: '0.8125rem' }}>
+
+                  <TableCell align='right' sx={{ fontFamily: 'monospace', fontSize: '0.8125rem' }}>
                     {execution.order}
                   </TableCell>
-                  <TableCell align="right" sx={{ fontFamily: 'monospace', fontSize: '0.8125rem' }}>
+
+                  <TableCell align='right' sx={{ fontFamily: 'monospace', fontSize: '0.8125rem' }}>
                     {execution.filled}
                   </TableCell>
                 </TableRow>
@@ -102,10 +125,11 @@ export default function Detail({ trade, isOpen }: DetailProps) {
               borderColor: 'primary.main'
             }}
           >
-            <Typography variant="body2" color="text.secondary">
-              <Box component="span" sx={{ fontWeight: 600, color: 'text.primary', mr: 0.5 }}>
+            <Typography variant='body2' color='text.secondary'>
+              <Box component='span' sx={{ fontWeight: 600, color: 'text.primary', mr: 0.5 }}>
                 News:
               </Box>
+
               {trade.news}
             </Typography>
           </Box>

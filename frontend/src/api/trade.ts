@@ -1,8 +1,8 @@
-import type { ExecutionData, PaginatedTradesResponse, TradeData } from '@trade-tracker/shared/types';
-
 import { get, post } from './client.ts';
 
-export const addTrade = (trade: TradeData, executionsData: ExecutionData[]) =>
+import type { ExecutionData, PaginatedTradesResponse, TradeData } from '@trade-tracker/shared/types';
+
+export const addTrade = (trade: TradeData, executionsData: ExecutionData[]): Promise<void> =>
   post<void>('/api/trades', {
     date: trade.date,
     float: trade.float,
@@ -16,9 +16,9 @@ export const addTrade = (trade: TradeData, executionsData: ExecutionData[]) =>
       madeAt: x.madeAt,
       order: x.order,
       price: x.price,
-      side: x.side,
-    })),
+      side: x.side
+    }))
   });
 
-export const getPaginatedTrades = (page: number, count: number) =>
+export const getPaginatedTrades = (page: number, count: number): Promise<PaginatedTradesResponse> =>
   get<PaginatedTradesResponse>(`/api/trades?page=${page}&limit=${count}`);

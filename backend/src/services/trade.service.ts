@@ -1,8 +1,9 @@
-import * as tradeRepo from '@/repositories/trade.repository';
-import * as executionRepo from '@/repositories/execution.repository';
+import { ExecutionData, PaginatedTradesResponse, TradeData } from '@trade-tracker/shared/types';
+
 import { database } from '@/database';
 import { NotFoundError } from '@/error';
-import { ExecutionData, PaginatedTradesResponse, TradeData } from '@trade-tracker/shared/types';
+import * as executionRepo from '@/repositories/execution.repository';
+import * as tradeRepo from '@/repositories/trade.repository';
 
 /**
  * Create a new trade and its associated executions.
@@ -18,7 +19,7 @@ export async function createTrade(tradeData: TradeData, executionsData: Executio
 
     const executionsWithId = executionsData.map(execution => ({
       ...execution,
-      tradeId: trade.id,
+      tradeId: trade.id
     }));
 
     await executionRepo.addExecutions(executionsWithId, trx);
@@ -44,7 +45,7 @@ export async function getTrades(page: number, limit: number): Promise<PaginatedT
     trades: trades,
     totalItems: count,
     totalPages: Math.ceil(count / limit),
-    currentPage: page,
+    currentPage: page
   };
 }
 
@@ -54,7 +55,7 @@ export async function getTrades(page: number, limit: number): Promise<PaginatedT
  * @param id The ID of the trade
  */
 export async function deleteTrade(id: number): Promise<void> {
-  if (!await tradeRepo.tradeExists(id)) {
+  if (!(await tradeRepo.tradeExists(id))) {
     throw new NotFoundError(`Trade '${id}' not found.`);
   }
 

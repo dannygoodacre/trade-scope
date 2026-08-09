@@ -1,43 +1,22 @@
 {
   "compilerOptions": {
-    /* 1. Environment & Standards */
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
+    "target": "ES2023",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
 
-    /* 2. Path Mapping */
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      /* The "Bridge": These tell TS that when it sees the package name,
-         it should look at the physical source files in the sibling folder.
-      */
       "@trade-tracker/shared": ["../shared/src/index.ts"],
       "@trade-tracker/shared/*": ["../shared/src/*"]
     },
 
-    /* 3. Build & Source Control */
-    "rootDir": "./src",
     "noEmit": true,
-    "allowImportingTsExtensions": true,
-
-    /* 4. Strictness & Performance */
     "strict": true,
-    "skipLibCheck": true,
-    "isolatedModules": true
+    "skipLibCheck": true
   },
   "include": [
     "src/**/*",
     "../shared/src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "../shared/node_modules"
-  ],
-  "references": [
-  { "path": "../shared" }
   ]
 }

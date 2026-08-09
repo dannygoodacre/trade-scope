@@ -1,5 +1,5 @@
 {
-  "name": "trade-tracker",
+  "name": "@trade-scope/backend",
   "version": "0.0.0",
   "type": "module",
   "private": true,
