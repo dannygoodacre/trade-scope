@@ -4,7 +4,7 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { IconButton, TableCell, TableRow } from '@mui/material';
 
 import { formatNumber } from '@/utils';
-import { foo } from '@/utils/numberFormatters.ts';
+import { formatDate } from '@/utils/numberFormatters.ts';
 
 import Detail from './Detail';
 
@@ -44,7 +44,7 @@ export default function Row({ trade }: TradeRowProps) {
         </TableCell>
 
         <TableCell width={150} align='right' sx={{ fontFamily: 'monospace' }}>
-          {foo(trade.date)}
+          {formatDate(trade.date)}
         </TableCell>
       </TableRow>
 

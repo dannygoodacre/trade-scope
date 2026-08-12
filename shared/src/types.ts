@@ -1,5 +1,5 @@
+import { ExecutionDataShape, ExecutionShape } from '@trade-scope/shared/schemas/execution.schema';
 import { TradeDataShape, TradeShape, TradeWithExecutionsShape } from '@trade-scope/shared/schemas/trade.schema';
-import { ExecutionDataShape, ExecutionShape } from '@trade-tracker/shared/schemas/execution.schema';
 import { z } from 'zod';
 
 export type ExecutionData = z.infer<typeof ExecutionDataShape>;

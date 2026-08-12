@@ -1,3 +1,4 @@
+import { Side } from '@trade-scope/shared/enums';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { AppError, NotFoundError } from '@/error';
@@ -42,15 +43,15 @@ describe('Trade Service', () => {
           filled: 789,
           madeAt: 'Input Made At 1',
           order: 101,
-          Price: 'Input Price 1',
-          side: 'Input Side 1',
+          price: 'Input Price 1',
+          side: Side.Buy,
         },
         {
           filled: 112,
           madeAt: 'Input Made At 2',
           order: 131,
-          Price: 'Input Price 2',
-          side: 'Input Side 2',
+          price: 'Input Price 2',
+          side: Side.Sell,
         },
       ];
 
@@ -92,16 +93,16 @@ describe('Trade Service', () => {
           filled: 789,
           madeAt: 'Input Made At 1',
           order: 101,
-          Price: 'Input Price 1',
-          side: 'Input Side 1',
+          price: 'Input Price 1',
+          side: Side.Buy,
           tradeId: testTradeId,
         },
         {
           filled: 112,
           madeAt: 'Input Made At 2',
           order: 131,
-          Price: 'Input Price 2',
-          side: 'Input Side 2',
+          price: 'Input Price 2',
+          side: Side.Sell,
           tradeId: testTradeId,
         },
       ];

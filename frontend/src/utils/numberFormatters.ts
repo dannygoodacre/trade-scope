@@ -12,7 +12,7 @@ export const formatWithCommas = (value: string): string => {
   return decimalPart != null ? `${formattedInteger}.${decimalPart}` : formattedInteger;
 };
 
-export const foo = (dateTime: any): string => {
+export const formatDate = (dateTime: string | number | Date): string => {
   const date = new Date(dateTime);
 
   if (isNaN(date.getTime())) {
