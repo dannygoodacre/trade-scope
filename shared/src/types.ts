@@ -1,10 +1,5 @@
-import {
-  ExecutionDataShape,
-  ExecutionShape,
-  TradeDataShape,
-  TradeShape,
-  TradeWithExecutionsShape
-} from '@trade-scope/shared/schemata';
+import { TradeDataShape, TradeShape, TradeWithExecutionsShape } from '@trade-scope/shared/schemas/trade.schema';
+import { ExecutionDataShape, ExecutionShape } from '@trade-tracker/shared/schemas/execution.schema';
 import { z } from 'zod';
 
 export type ExecutionData = z.infer<typeof ExecutionDataShape>;
@@ -13,7 +8,6 @@ export type Execution = z.infer<typeof ExecutionShape>;
 
 export type TradeData = z.infer<typeof TradeDataShape>;
 
-// TODO: Is this only needed by the frontend?
 export type Trade = z.infer<typeof TradeShape>;
 
 export type TradeWithExecutions = z.infer<typeof TradeWithExecutionsShape>;

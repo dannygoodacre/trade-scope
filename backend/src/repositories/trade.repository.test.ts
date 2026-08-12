@@ -22,8 +22,8 @@ describe('Trade Repository', () => {
 
     database = new Kysely<DB>({
       dialect: new SqliteDialect({
-        database: rawSqlite
-      })
+        database: rawSqlite,
+      }),
     });
   });
 
@@ -46,7 +46,7 @@ describe('Trade Repository', () => {
         volume: 456,
         sector: 'Input Sector',
         news: 'Input News',
-        newsTime: 'Input News Time'
+        newsTime: 'Input News Time',
       };
 
       // Act
@@ -78,7 +78,7 @@ describe('Trade Repository', () => {
           volume: 456,
           sector: 'Input Sector 1',
           news: 'Input News 1',
-          newsTime: 'Input News Time 1'
+          newsTime: 'Input News Time 1',
         },
         {
           symbol: 'Input Symbol 2',
@@ -87,8 +87,8 @@ describe('Trade Repository', () => {
           volume: 101,
           sector: 'Input Sector 2',
           news: 'Input News 2',
-          newsTime: 'Input News Time 2'
-        }
+          newsTime: 'Input News Time 2',
+        },
       ];
 
       const { id: trade1Id } = await database
@@ -129,7 +129,7 @@ describe('Trade Repository', () => {
         volume: 456,
         sector: 'Input Sector',
         news: 'Input News',
-        newsTime: 'Input News Time'
+        newsTime: 'Input News Time',
       };
 
       const { id } = await database.insertInto('trades').values(newTrade).returning('id').executeTakeFirstOrThrow();

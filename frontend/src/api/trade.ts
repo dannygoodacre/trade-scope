@@ -11,13 +11,13 @@ export const addTrade = (trade: TradeData, executionsData: ExecutionData[]): Pro
     sector: trade.sector,
     symbol: trade.symbol,
     volume: trade.volume,
-    executions: executionsData.map(x => ({
+    executions: executionsData.map((x) => ({
       filled: x.filled,
       madeAt: x.madeAt,
       order: x.order,
       price: x.price,
-      side: x.side
-    }))
+      side: x.side,
+    })),
   });
 
 export const getPaginatedTrades = (page: number, count: number): Promise<PaginatedTradesResponse> =>

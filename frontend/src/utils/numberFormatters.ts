@@ -22,6 +22,6 @@ export const foo = (dateTime: any): string => {
   return new Intl.DateTimeFormat(navigator.language, {
     year: 'numeric',
     month: '2-digit',
-    day: '2-digit'
+    day: '2-digit',
   }).format(date);
 };

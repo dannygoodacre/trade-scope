@@ -13,10 +13,10 @@ interface TransactionsTableToolbarProps {
 export default function TransactionsTableToolbar({
   selected,
   addTransaction,
-  handleDelete
+  handleDelete,
 }: TransactionsTableToolbarProps) {
   return (
-    <Toolbar sx={{ ...(selected.length > 0 && { bgcolor: theme => theme.palette.action.selected }) }}>
+    <Toolbar sx={{ ...(selected.length > 0 && { bgcolor: (theme) => theme.palette.action.selected }) }}>
       {selected.length > 0 ? (
         <Typography sx={commonStyles.flexPercent(100)} color='inherit' variant='subtitle1' component='div'>
           {selected.length} selected

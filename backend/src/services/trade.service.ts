@@ -14,12 +14,12 @@ import * as tradeRepo from '@/repositories/trade.repository';
  * @return The ID of the new trade
  */
 export async function createTrade(tradeData: TradeData, executionsData: ExecutionData[]): Promise<number> {
-  return await database.transaction().execute(async trx => {
+  return await database.transaction().execute(async (trx) => {
     const trade = await tradeRepo.addTrade(tradeData, trx);
 
-    const executionsWithId = executionsData.map(execution => ({
+    const executionsWithId = executionsData.map((execution) => ({
       ...execution,
-      tradeId: trade.id
+      tradeId: trade.id,
     }));
 
     await executionRepo.addExecutions(executionsWithId, trx);
@@ -45,7 +45,7 @@ export async function getTrades(page: number, limit: number): Promise<PaginatedT
     trades: trades,
     totalItems: count,
     totalPages: Math.ceil(count / limit),
-    currentPage: page
+    currentPage: page,
   };
 }
 
@@ -59,7 +59,7 @@ export async function deleteTrade(id: number): Promise<void> {
     throw new NotFoundError(`Trade '${id}' not found.`);
   }
 
-  await database.transaction().execute(async trx => {
+  await database.transaction().execute(async (trx) => {
     await executionRepo.deleteExecutionsByTradeId(id, trx);
 
     await tradeRepo.deleteTrade(id, trx);

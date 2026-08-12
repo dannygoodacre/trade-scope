@@ -31,7 +31,7 @@ export default function NewTrade() {
     float: 0,
     news: '',
     newsTime: '',
-    executions: executions
+    executions: executions,
   };
 
   const [trade, setTrade] = useState<Trade>(initialTradeState);
@@ -43,14 +43,14 @@ export default function NewTrade() {
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
-    const updatedTransactions = executions.map(transaction => ({
+    const updatedTransactions = executions.map((transaction) => ({
       ...transaction,
-      madeAt: `${trade.date}${transaction.madeAt.slice(10)}`
+      madeAt: `${trade.date}${transaction.madeAt.slice(10)}`,
     }));
 
     const finalTradeData = {
       ...trade,
-      transactions: updatedTransactions
+      transactions: updatedTransactions,
     };
 
     setExecutions(updatedTransactions);

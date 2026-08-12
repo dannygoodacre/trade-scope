@@ -21,32 +21,32 @@ export default function Header({ trade, setTrade, isSubmitted }: TradeFormHeader
   const handleSymbolChange = (event: ChangeEvent<HTMLInputElement>) =>
     setTrade({
       ...trade,
-      symbol: event.target.value.replace(' ', '').toUpperCase()
+      symbol: event.target.value.replace(' ', '').toUpperCase(),
     });
 
   const handleSectorChange = (event: ChangeEvent<HTMLInputElement>) =>
     setTrade({
       ...trade,
-      sector: event.target.value
+      sector: event.target.value,
     });
 
   const handleDateChange = (value: Dayjs | null) =>
     setTrade({
       ...trade,
-      date: value?.startOf('day')?.format('YYYY-MM-DD') ?? ''
+      date: value?.startOf('day')?.format('YYYY-MM-DD') ?? '',
     });
 
   const handleNewsChange = (event: ChangeEvent<HTMLInputElement>) =>
     setTrade({
       ...trade,
-      news: event.target.value
+      news: event.target.value,
     });
 
   const handleNewsTimeChange = (value: Dayjs | null) => {
     if (!value) {
       setTrade({
         ...trade,
-        newsTime: ''
+        newsTime: '',
       });
       return;
     }
@@ -55,7 +55,7 @@ export default function Header({ trade, setTrade, isSubmitted }: TradeFormHeader
 
     setTrade({
       ...trade,
-      newsTime: mergedDateTime.toISOString()
+      newsTime: mergedDateTime.toISOString(),
     });
   };
 
@@ -87,7 +87,7 @@ export default function Header({ trade, setTrade, isSubmitted }: TradeFormHeader
           required
           label='Volume'
           value={trade.volume}
-          onChange={val => setTrade({ ...trade, volume: val })}
+          onChange={(val) => setTrade({ ...trade, volume: val })}
           error={isSubmitted && (trade.volume === null || trade.volume === undefined || trade.volume === 0)}
           helperText={
             isSubmitted && (trade.volume === null || trade.volume === undefined || trade.volume === 0)
@@ -96,14 +96,14 @@ export default function Header({ trade, setTrade, isSubmitted }: TradeFormHeader
           }
           sx={{
             ...commonStyles.flexPercent(50),
-            '& .MuiInputBase-input': { fontFamily: 'monospace' }
+            '& .MuiInputBase-input': { fontFamily: 'monospace' },
           }}
         />
         <NumberInput
           required
           label='Float'
           value={trade.float}
-          onChange={val => setTrade({ ...trade, float: val })}
+          onChange={(val) => setTrade({ ...trade, float: val })}
           error={isSubmitted && (trade.float === null || trade.float === undefined || trade.float === 0)}
           helperText={
             isSubmitted && (trade.float === null || trade.float === undefined || trade.float === 0)
@@ -112,7 +112,7 @@ export default function Header({ trade, setTrade, isSubmitted }: TradeFormHeader
           }
           sx={{
             ...commonStyles.flexPercent(50),
-            '& .MuiInputBase-input': { fontFamily: 'monospace' }
+            '& .MuiInputBase-input': { fontFamily: 'monospace' },
           }}
         />
       </Box>
@@ -136,8 +136,8 @@ export default function Header({ trade, setTrade, isSubmitted }: TradeFormHeader
               helperText:
                 isSubmitted && isNullEmptyOrWhitespace(trade.newsTime) && !isNullEmptyOrWhitespace(trade.news)
                   ? 'Please specify a time for the news'
-                  : ''
-            }
+                  : '',
+            },
           }}
         />
       </Box>

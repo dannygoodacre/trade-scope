@@ -17,7 +17,7 @@ export default function TopBar() {
       sx={{
         backgroundColor: theme.palette.background.paper,
         backgroundImage: 'none',
-        borderBottom: `1px solid ${theme.palette.divider}`
+        borderBottom: `1px solid ${theme.palette.divider}`,
       }}
     >
       <Toolbar sx={{ justifyContent: 'space-between', px: { xs: 2, sm: 4 } }}>
@@ -29,7 +29,7 @@ export default function TopBar() {
             alignItems: 'center',
             gap: 1,
             textDecoration: 'none',
-            color: 'text.primary'
+            color: 'text.primary',
           }}
         >
           <ShowChartIcon color='primary' sx={{ fontSize: 28 }} />
@@ -49,7 +49,7 @@ export default function TopBar() {
               textTransform: 'none',
               borderRadius: 1.5,
               px: 1.75,
-              py: 0.75
+              py: 0.75,
             }}
           >
             Browse
@@ -67,7 +67,7 @@ export default function TopBar() {
                 textTransform: 'none',
                 borderRadius: 1.5,
                 px: 1.75,
-                py: 0.75
+                py: 0.75,
               }}
             >
               New Trade

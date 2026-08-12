@@ -9,7 +9,7 @@ import {
   TableContainer,
   TableHead,
   TablePagination,
-  TableRow
+  TableRow,
 } from '@mui/material';
 
 import usePaginatedTrades from '@/hooks/usePaginatedTrades/usePaginatedTrades';
@@ -21,22 +21,22 @@ export default function TradeHistory() {
 
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
-    pageLimit: 25
+    pageLimit: 25,
   });
 
   const { data: pageData, isLoading } = usePaginatedTrades(paginationModel.page + 1, paginationModel.pageLimit);
 
   const handleChangePage = (_: unknown, newPage: number) =>
-    setPaginationModel(previous => ({
+    setPaginationModel((previous) => ({
       ...previous,
-      page: newPage
+      page: newPage,
     }));
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setPaginationModel(previous => ({
+    setPaginationModel((previous) => ({
       ...previous,
       pageLimit: parseInt(event.target.value, 10),
-      page: 0
+      page: 0,
     }));
 
   return (
@@ -62,7 +62,7 @@ export default function TradeHistory() {
 
             <TableBody>
               {pageData && pageData.trades.length > 0
-                ? pageData.trades.map(trade => <Row key={trade.id} trade={trade} />)
+                ? pageData.trades.map((trade) => <Row key={trade.id} trade={trade} />)
                 : !isLoading && (
                     <TableRow>
                       <TableCell colSpan={5} align='center' sx={{ py: 3 }}>

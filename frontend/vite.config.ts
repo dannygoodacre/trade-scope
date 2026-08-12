@@ -6,14 +6,14 @@ export default defineConfig({
   plugins: [
     react({
       babel: {
-        plugins: [['babel-plugin-react-compiler']]
-      }
-    })
+        plugins: [['babel-plugin-react-compiler']],
+      },
+    }),
   ],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
-      '@trade-scope/shared': path.resolve(__dirname, '../shared/src')
-    }
-  }
+      '@trade-scope/shared': path.resolve(__dirname, '../shared/src'),
+    },
+  },
 });

@@ -9,7 +9,7 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Typography
+  Typography,
 } from '@mui/material';
 
 import type { TradeWithExecutions } from '@trade-scope/shared/types';
@@ -34,7 +34,7 @@ export default function Detail({ trade, isOpen }: DetailProps) {
           backgroundColor: 'background.default',
           border: '1px solid',
           borderColor: 'divider',
-          borderRadius: 1.5
+          borderRadius: 1.5,
         }}
       >
         <Table size='small' sx={{ mb: trade.news ? 2 : 0 }}>
@@ -61,7 +61,7 @@ export default function Detail({ trade, isOpen }: DetailProps) {
           </TableHead>
 
           <TableBody>
-            {sortedExecutions.map(execution => {
+            {sortedExecutions.map((execution) => {
               const isBuy = execution.side === 0;
               return (
                 <TableRow key={execution.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
@@ -70,7 +70,7 @@ export default function Detail({ trade, isOpen }: DetailProps) {
                       hour: '2-digit',
                       minute: '2-digit',
                       second: '2-digit',
-                      hour12: false
+                      hour12: false,
                     })}
                   </TableCell>
 
@@ -92,8 +92,8 @@ export default function Detail({ trade, isOpen }: DetailProps) {
                         '& .MuiChip-label': {
                           px: 0,
                           width: '100%',
-                          textAlign: 'center'
-                        }
+                          textAlign: 'center',
+                        },
                       }}
                     />
                   </TableCell>
@@ -122,7 +122,7 @@ export default function Detail({ trade, isOpen }: DetailProps) {
               backgroundColor: 'action.hover',
               borderRadius: 1,
               borderLeft: '3px solid',
-              borderColor: 'primary.main'
+              borderColor: 'primary.main',
             }}
           >
             <Typography variant='body2' color='text.secondary'>

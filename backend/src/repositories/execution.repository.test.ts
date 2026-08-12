@@ -23,8 +23,8 @@ describe('Execution Repository', () => {
 
     database = new Kysely<DB>({
       dialect: new SqliteDialect({
-        database: rawSqlite
-      })
+        database: rawSqlite,
+      }),
     });
   });
 
@@ -47,7 +47,7 @@ describe('Execution Repository', () => {
         volume: 456,
         sector: 'Input Sector',
         news: 'Input News',
-        newsTime: 'Input News Time'
+        newsTime: 'Input News Time',
       };
 
       const { id } = await addTrade(newTrade, database);
@@ -59,7 +59,7 @@ describe('Execution Repository', () => {
           order: 456,
           price: 'Input Price 1',
           side: Side.Sell,
-          tradeId: id
+          tradeId: id,
         },
         {
           filled: 789,
@@ -67,8 +67,8 @@ describe('Execution Repository', () => {
           order: 101,
           price: 'Input Price 2',
           side: Side.Buy,
-          tradeId: id
-        }
+          tradeId: id,
+        },
       ];
 
       // Act
@@ -79,10 +79,10 @@ describe('Execution Repository', () => {
 
       expect(executions).toEqual([
         expect.objectContaining({ id: expect.any(Number) }),
-        expect.objectContaining({ id: expect.any(Number) })
+        expect.objectContaining({ id: expect.any(Number) }),
       ]);
 
-      executions.forEach(execution => {
+      executions.forEach((execution) => {
         expect(Number.isInteger(execution.id)).toBe(true);
 
         expect(execution.id).toBeGreaterThan(0);
@@ -100,7 +100,7 @@ describe('Execution Repository', () => {
         volume: 456,
         sector: 'Input Sector 1',
         news: 'Input News 1',
-        newsTime: 'Input News Time 1'
+        newsTime: 'Input News Time 1',
       };
 
       const { id: tradeId1 } = await addTrade(newTrade1, database);
@@ -112,7 +112,7 @@ describe('Execution Repository', () => {
         volume: 456,
         sector: 'Input Sector 2',
         news: 'Input News 2',
-        newsTime: 'Input News Time 2'
+        newsTime: 'Input News Time 2',
       };
 
       const { id: tradeId2 } = await addTrade(newTrade2, database);
@@ -124,7 +124,7 @@ describe('Execution Repository', () => {
           order: 456,
           price: 'Input Price 1',
           side: Side.Sell,
-          tradeId: tradeId1
+          tradeId: tradeId1,
         },
         {
           filled: 789,
@@ -132,7 +132,7 @@ describe('Execution Repository', () => {
           order: 101,
           price: 'Input Price 2',
           side: Side.Buy,
-          tradeId: tradeId2
+          tradeId: tradeId2,
         },
         {
           filled: 112,
@@ -140,8 +140,8 @@ describe('Execution Repository', () => {
           order: 131,
           price: 'Input Price 3',
           side: Side.Buy,
-          tradeId: tradeId2
-        }
+          tradeId: tradeId2,
+        },
       ];
 
       await addExecutions(newExecutions, database);
@@ -160,7 +160,7 @@ describe('Execution Repository', () => {
 
       expect(executionsForTrade1).toHaveLength(2);
 
-      expect(executionsForTrade1).toEqual(newExecutions.slice(1, 3).map(x => ({ ...x, id: expect.any(Number) })));
+      expect(executionsForTrade1).toEqual(newExecutions.slice(1, 3).map((x) => ({ ...x, id: expect.any(Number) })));
 
       const executionsForTrade2 = await database
         .selectFrom('executions')

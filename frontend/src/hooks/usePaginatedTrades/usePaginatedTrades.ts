@@ -7,6 +7,6 @@ import type { PaginatedTradesResponse } from '@trade-scope/shared/types';
 export default function usePaginatedTrades(page: number, limit: number) {
   return useQuery<PaginatedTradesResponse>({
     queryKey: ['trades', { page, count: limit }],
-    queryFn: () => getPaginatedTrades(page, limit)
+    queryFn: () => getPaginatedTrades(page, limit),
   });
 }

@@ -17,7 +17,7 @@ interface TradeRowProps {
 export default function Row({ trade }: TradeRowProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleOpen = () => setIsOpen(prev => !prev);
+  const toggleOpen = () => setIsOpen((prev) => !prev);
 
   return (
     <>
@@ -26,7 +26,7 @@ export default function Row({ trade }: TradeRowProps) {
           <IconButton
             aria-label='expand row'
             size='small'
-            onClick={e => {
+            onClick={(e) => {
               e.stopPropagation();
               toggleOpen();
             }}

@@ -1,4 +1,4 @@
-import { Trade, TradeWithExecutions } from '@trade-scope/shared/types.ts';
+import { Trade, TradeWithExecutions } from '@trade-scope/shared/types';
 import { DeleteResult } from 'kysely';
 import { jsonArrayFrom } from 'kysely/helpers/sqlite';
 
@@ -15,9 +15,9 @@ export const deleteTrade = (id: number, db: QueryBuilder = database): Promise<De
 export const getTradeCount = (db: QueryBuilder = database): Promise<number> =>
   db
     .selectFrom('trades')
-    .select(x => x.fn.countAll<number>().as('count'))
+    .select((x) => x.fn.countAll<number>().as('count'))
     .executeTakeFirstOrThrow()
-    .then(x => x.count);
+    .then((x) => x.count);
 
 export const getTrades = (page: number, limit: number, db: QueryBuilder = database): Promise<TradeWithExecutions[]> =>
   db
@@ -26,14 +26,14 @@ export const getTrades = (page: number, limit: number, db: QueryBuilder = databa
     .orderBy('date', 'desc')
     .limit(limit)
     .offset((page - 1) * limit)
-    .select(x => [
+    .select((x) => [
       jsonArrayFrom(
         x
           .selectFrom('executions')
           .select(['id', 'filled', 'order', 'price', 'side', 'madeAt'])
           .whereRef('executions.tradeId', '=', 'trades.id')
-          .orderBy('executions.madeAt', 'asc')
-      ).as('executions')
+          .orderBy('executions.madeAt', 'asc'),
+      ).as('executions'),
     ])
     .execute();
 
@@ -43,4 +43,4 @@ export const tradeExists = (id: number, db: QueryBuilder = database): Promise<bo
     .select('id')
     .where('id', '=', id)
     .executeTakeFirst()
-    .then(x => !!x);
+    .then((x) => !!x);

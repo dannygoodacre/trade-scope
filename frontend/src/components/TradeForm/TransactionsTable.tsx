@@ -8,7 +8,7 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow
+  TableRow,
 } from '@mui/material';
 
 import TransactionsTableToolbar from '@/components/TradeForm/TransactionsTableToolbar.tsx';
@@ -38,14 +38,14 @@ export default function TransactionsTable({ executions, setExecutions, isSubmitt
           price: '',
           order: 0,
           filled: 0,
-          madeAt: ''
-        }
+          madeAt: '',
+        },
       ]);
     }
   }, [setExecutions, executions]);
 
   const addTransaction = useCallback(() => {
-    const nextId = executions.length > 0 ? Math.max(...executions.map(t => t.id)) + 1 : 1;
+    const nextId = executions.length > 0 ? Math.max(...executions.map((t) => t.id)) + 1 : 1;
 
     setExecutions([
       ...executions,
@@ -55,17 +55,17 @@ export default function TransactionsTable({ executions, setExecutions, isSubmitt
         price: '',
         order: 0,
         filled: 0,
-        madeAt: ''
-      }
+        madeAt: '',
+      },
     ]);
   }, [setExecutions, executions]);
 
   const handleChange = (id: number, fieldName: string, value: string | number | Side | Dayjs) => {
-    const newTransactions = executions.map(transaction => {
+    const newTransactions = executions.map((transaction) => {
       if (transaction.id === id) {
         return {
           ...transaction,
-          [fieldName]: value
+          [fieldName]: value,
         };
       }
       return transaction;
@@ -80,14 +80,14 @@ export default function TransactionsTable({ executions, setExecutions, isSubmitt
     if (selected.indexOf(id) === -1) {
       newSelected = newSelected.concat(selected, id);
     } else {
-      newSelected = selected.filter(transactionId => transactionId !== id);
+      newSelected = selected.filter((transactionId) => transactionId !== id);
     }
 
     setSelected(newSelected);
   };
 
   const handleDelete = () => {
-    setExecutions(executions.filter(transaction => !selected.includes(transaction.id)));
+    setExecutions(executions.filter((transaction) => !selected.includes(transaction.id)));
 
     setSelected([]);
   };
@@ -98,7 +98,7 @@ export default function TransactionsTable({ executions, setExecutions, isSubmitt
       return;
     }
 
-    setSelected(executions.map(n => n.id));
+    setSelected(executions.map((n) => n.id));
   };
 
   const isSelected = (id: number) => selected.indexOf(id) !== -1;
@@ -128,7 +128,7 @@ export default function TransactionsTable({ executions, setExecutions, isSubmitt
           </TableHead>
 
           <TableBody>
-            {executions.map(transaction => (
+            {executions.map((transaction) => (
               <TransactionRow
                 key={transaction.id}
                 transaction={transaction}

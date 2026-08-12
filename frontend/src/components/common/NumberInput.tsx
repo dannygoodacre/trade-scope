@@ -124,18 +124,18 @@ export default function NumberInput({
           min,
           inputMode: isInteger ? 'numeric' : 'decimal',
           autocomplete: 'off',
-          ...slotProps?.htmlInput
-        }
+          ...slotProps?.htmlInput,
+        },
       }}
       sx={{
         '& input[type=number]::-webkit-outer-spin-button, & input[type=number]::-webkit-inner-spin-button': {
           WebkitAppearance: 'none',
-          margin: 0
+          margin: 0,
         },
         '& input[type=number]': {
-          MozAppearance: 'textfield'
+          MozAppearance: 'textfield',
         },
-        ...sx
+        ...sx,
       }}
     />
   );

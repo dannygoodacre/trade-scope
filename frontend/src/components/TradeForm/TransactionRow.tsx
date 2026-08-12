@@ -19,7 +19,7 @@ export default function TransactionRow({ transaction, isSelected, onChange, onCl
   const handleTimeChange = (value: Dayjs | null) => onChange(transaction.id, 'madeAt', value?.toISOString() ?? '');
 
   const monospaceInputSx = {
-    '& .MuiInputBase-input': { fontFamily: 'monospace' }
+    '& .MuiInputBase-input': { fontFamily: 'monospace' },
   };
 
   return (
@@ -37,7 +37,7 @@ export default function TransactionRow({ transaction, isSelected, onChange, onCl
           value={
             typeof transaction.price === 'number' ? transaction.price : parseFloat(transaction.price as string) || 0
           }
-          onChange={val => onChange(transaction.id, 'price', val)}
+          onChange={(val) => onChange(transaction.id, 'price', val)}
           sx={monospaceInputSx}
         />
       </TableCell>
@@ -46,7 +46,7 @@ export default function TransactionRow({ transaction, isSelected, onChange, onCl
         <NumberInput
           value={transaction.order}
           step={1}
-          onChange={val => onChange(transaction.id, 'order', val)}
+          onChange={(val) => onChange(transaction.id, 'order', val)}
           sx={monospaceInputSx}
         />
       </TableCell>
@@ -55,7 +55,7 @@ export default function TransactionRow({ transaction, isSelected, onChange, onCl
         <NumberInput
           value={transaction.filled}
           step={1}
-          onChange={val => onChange(transaction.id, 'filled', val)}
+          onChange={(val) => onChange(transaction.id, 'filled', val)}
           sx={monospaceInputSx}
         />
       </TableCell>

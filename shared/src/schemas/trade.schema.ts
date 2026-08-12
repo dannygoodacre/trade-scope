@@ -1,4 +1,4 @@
-import { ExecutionShape } from '@trade-scope/shared/schemata';
+import { ExecutionShape } from '@trade-scope/shared/schemas/execution.schema';
 import { z } from 'zod';
 
 export const TradeDataShape = z.strictObject({
@@ -8,13 +8,13 @@ export const TradeDataShape = z.strictObject({
   newsTime: z.iso.time().nullish(),
   sector: z.string().min(1),
   symbol: z.string().min(1).toUpperCase(),
-  volume: z.coerce.number().int().positive()
+  volume: z.coerce.number().int().positive(),
 });
 
 export const TradeShape = TradeDataShape.extend({
-  id: z.number().int().positive()
+  id: z.number().int().positive(),
 });
 
 export const TradeWithExecutionsShape = TradeShape.extend({
-  executions: z.array(ExecutionShape).min(2)
+  executions: z.array(ExecutionShape).min(2),
 });

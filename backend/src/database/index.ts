@@ -7,9 +7,9 @@ import { DB, Executions, Trades } from './db';
 
 export const database = new Kysely<DB>({
   dialect: new SqliteDialect({
-    database: new SQLite(config.databaseConnectionString)
+    database: new SQLite(config.databaseConnectionString),
   }),
-  plugins: [new ParseJSONResultsPlugin()]
+  plugins: [new ParseJSONResultsPlugin()],
 });
 
 export type NewExecution = Insertable<Executions>;
