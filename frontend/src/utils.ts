@@ -13,3 +13,6 @@ export const formatDate = (dateTime: string | number | Date): string => {
     day: '2-digit',
   }).format(date);
 };
+
+export const isNullEmptyOrWhitespace = (value: string | null | undefined): boolean =>
+  value === null || value === undefined || value.trim().length === 0;

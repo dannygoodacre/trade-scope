@@ -26,6 +26,7 @@ export default function TransactionsTableToolbar({
           <Typography sx={styles.flexPercent(100)} variant='h6' id='tableTitle' component='div'>
             Transactions
           </Typography>
+
           <Tooltip title='Add new transaction'>
             <IconButton color='primary' onClick={addTransaction}>
               <AddIcon />

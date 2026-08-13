@@ -1,7 +1,7 @@
 import { API_URL } from '@/config';
-import { ApiError } from '@/types';
+import { ApiError } from '@/error';
 
-import type { ValidationProblemDetails } from '@/types';
+import type { ValidationProblemDetails } from '@trade-scope/shared/types';
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 

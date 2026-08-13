@@ -119,10 +119,15 @@ export default function TransactionsTable({ executions, setExecutions, isSubmitt
                   onChange={handleSelectAllClick}
                 />
               </TableCell>
+
               <TableCell>Side</TableCell>
+
               <TableCell>Price</TableCell>
+
               <TableCell>Order</TableCell>
+
               <TableCell>Filled</TableCell>
+
               <TableCell>Time</TableCell>
             </TableRow>
           </TableHead>

@@ -1,21 +1,14 @@
+import { ValidationProblemDetails } from '@trade-tracker/shared/types';
 import { ErrorRequestHandler, NextFunction, Request, Response } from 'express';
 import { ZodError } from 'zod';
 
 import { NotFoundError } from '@/error';
 
-interface RFC9457ProblemDetails {
-  type: string | 'about:blank';
-  title: string;
-  status: number;
-  detail: string;
-  instance?: string;
-  errors?: Array<{
-    pointer: string;
-    message: string;
-  }>;
-}
-
-export function mapZodErrorToProblemDetails(err: ZodError, instanceUri?: string): RFC9457ProblemDetails {
+export function mapZodErrorToProblemDetails(
+  err: ZodError,
+  instanceUri?: string,
+  traceId?: string,
+): ValidationProblemDetails {
   const detail =
     err.issues.length === 1
       ? `Validation failed: ${err.issues[0].message}`
@@ -27,6 +20,7 @@ export function mapZodErrorToProblemDetails(err: ZodError, instanceUri?: string)
     status: 400,
     detail: detail,
     instance: instanceUri,
+    traceId: traceId,
     errors: err.issues.map((issue) => ({
       pointer: issue.path.length > 0 ? `/${issue.path.join('/')}` : '/',
       message: issue.message,

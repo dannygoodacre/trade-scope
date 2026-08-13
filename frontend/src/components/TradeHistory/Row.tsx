@@ -3,7 +3,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { IconButton, TableCell, TableRow } from '@mui/material';
 
-import { formatDate, formatNumber } from '@/utils/numberFormatters';
+import { formatDate, formatNumber } from '@/utils';
 
 import Detail from './Detail';
 
@@ -42,6 +42,10 @@ export default function Row({ trade }: TradeRowProps) {
           {formatNumber(trade.volume)}
         </TableCell>
 
+        <TableCell width={120} align='right' sx={{ fontFamily: 'monospace' }}>
+          {formatNumber(trade.float)}
+        </TableCell>
+
         <TableCell width={150} align='right' sx={{ fontFamily: 'monospace' }}>
           {formatDate(trade.date)}
         </TableCell>
@@ -49,7 +53,7 @@ export default function Row({ trade }: TradeRowProps) {
 
       {isOpen && (
         <TableRow>
-          <TableCell colSpan={5}>
+          <TableCell colSpan={6}>
             <Detail trade={trade} isOpen={isOpen} />
           </TableCell>
         </TableRow>

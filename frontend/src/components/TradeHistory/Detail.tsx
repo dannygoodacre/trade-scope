@@ -15,6 +15,16 @@ import dayjs from 'dayjs';
 
 import type { TradeWithExecutions } from '@trade-scope/shared/types';
 
+const TABLE_ROW_HEADING_SX = {
+  color: 'text.secondary',
+  fontWeight: 600,
+} as const;
+
+const TABLE_ROW_CELL_SX = {
+  fontFamily: 'monospace',
+  fontSize: '0.8125rem',
+} as const;
+
 interface DetailProps {
   trade: TradeWithExecutions;
   isOpen: boolean;
@@ -43,19 +53,19 @@ export default function Detail({ trade, isOpen }: DetailProps) {
             <TableRow>
               <TableCell sx={{ color: 'text.secondary', fontWeight: 600 }}>Time</TableCell>
 
-              <TableCell align='center' sx={{ color: 'text.secondary', fontWeight: 600 }}>
+              <TableCell align='center' sx={TABLE_ROW_HEADING_SX}>
                 Side
               </TableCell>
 
-              <TableCell align='right' sx={{ color: 'text.secondary', fontWeight: 600 }}>
+              <TableCell align='right' sx={TABLE_ROW_HEADING_SX}>
                 Price
               </TableCell>
 
-              <TableCell align='right' sx={{ color: 'text.secondary', fontWeight: 600 }}>
+              <TableCell align='right' sx={TABLE_ROW_HEADING_SX}>
                 Order Qty
               </TableCell>
 
-              <TableCell align='right' sx={{ color: 'text.secondary', fontWeight: 600 }}>
+              <TableCell align='right' sx={TABLE_ROW_HEADING_SX}>
                 Filled Qty
               </TableCell>
             </TableRow>
@@ -99,15 +109,15 @@ export default function Detail({ trade, isOpen }: DetailProps) {
                     />
                   </TableCell>
 
-                  <TableCell align='right' sx={{ fontFamily: 'monospace', fontSize: '0.8125rem' }}>
+                  <TableCell align='right' sx={TABLE_ROW_CELL_SX}>
                     {execution.price}
                   </TableCell>
 
-                  <TableCell align='right' sx={{ fontFamily: 'monospace', fontSize: '0.8125rem' }}>
+                  <TableCell align='right' sx={TABLE_ROW_CELL_SX}>
                     {execution.order}
                   </TableCell>
 
-                  <TableCell align='right' sx={{ fontFamily: 'monospace', fontSize: '0.8125rem' }}>
+                  <TableCell align='right' sx={TABLE_ROW_CELL_SX}>
                     {execution.filled}
                   </TableCell>
                 </TableRow>

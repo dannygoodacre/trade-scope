@@ -54,6 +54,9 @@ export default function TradeHistory() {
                 <TableCell align='right' style={{ minWidth: 120, fontWeight: 'bold' }}>
                   Volume
                 </TableCell>
+                <TableCell align='right' style={{ minWidth: 120, fontWeight: 'bold' }}>
+                  Float
+                </TableCell>
                 <TableCell align='right' style={{ minWidth: 150, fontWeight: 'bold' }}>
                   Date
                 </TableCell>

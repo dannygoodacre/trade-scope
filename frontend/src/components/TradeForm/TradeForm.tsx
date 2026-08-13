@@ -3,15 +3,14 @@ import { Alert, Box, Button, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 
 import { addTrade } from '@/api/trade';
+import { ApiError } from '@/error';
 import * as styles from '@/styles/common';
-import { ApiError } from '@/types';
 
 import Header from './Header';
 import TransactionsTable from './TransactionsTable';
 
-import type { ValidationProblemDetails } from '@/types';
 import type { AlertColor } from '@mui/material';
-import type { Execution, Trade } from '@trade-scope/shared/types';
+import type { Execution, Trade, ValidationProblemDetails } from '@trade-scope/shared/types';
 import type { JSX, SyntheticEvent } from 'react';
 
 interface FormStatus {
@@ -98,11 +97,15 @@ export default function NewTrade() {
     return (
       <div>
         <div style={{ fontWeight: 'bold', marginBottom: '4px' }}>{title}</div>
-        {Object.entries(details.errors).map(([field, messages]) => (
-          <div key={field} style={{ fontSize: '0.875rem' }}>
-            - <strong>{field}:</strong> {messages.join(', ')}
-          </div>
-        ))}
+        {details.errors?.map((error, index) => {
+          const fieldName = error.pointer.replace(/^\//, '') || 'general';
+
+          return (
+            <div key={`${error.pointer}-${index}`} style={{ fontSize: '0.875rem' }}>
+              - <strong>{fieldName}:</strong> {error.message}
+            </div>
+          );
+        })}
       </div>
     );
   };
