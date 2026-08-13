@@ -6,11 +6,9 @@ export const formHeader = {
   flexDirection: 'column',
 };
 
-export const formRow = (theme: Theme) => {
-  return {
-    display: 'flex',
-    gap: theme.spacing(2),
-    marginBottom: theme.spacing(4),
-    width: '100%',
-  };
-};
+export const formRow = (theme: Theme) => ({
+  display: 'flex',
+  gap: theme.spacing(2),
+  marginBottom: theme.spacing(4),
+  width: '100%',
+});
