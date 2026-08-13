@@ -12,7 +12,7 @@ import TransactionsTable from './TransactionsTable';
 import type { ValidationProblemDetails } from '@/types';
 import type { AlertColor } from '@mui/material';
 import type { Execution, Trade } from '@trade-scope/shared/types';
-import type { FormEvent, JSX } from 'react';
+import type { JSX, SyntheticEvent } from 'react';
 
 interface FormStatus {
   type: AlertColor | null;
@@ -40,7 +40,7 @@ export default function NewTrade() {
 
   const [status, setStatus] = useState<FormStatus>({ type: null, message: '' });
 
-  const handleSubmit = async (event: FormEvent) => {
+  const handleSubmit = async (event: SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const updatedTransactions = executions.map((transaction) => ({

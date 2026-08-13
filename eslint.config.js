@@ -21,7 +21,6 @@ export default defineConfig([
     rules: {
       curly: ['error', 'all'],
       '@typescript-eslint/no-explicit-any': 'error',
-
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
     },
