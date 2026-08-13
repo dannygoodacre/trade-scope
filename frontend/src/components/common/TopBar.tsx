@@ -34,26 +34,28 @@ export default function TopBar() {
         >
           <ShowChartIcon color='primary' sx={{ fontSize: 28 }} />
           <Typography variant='h6' fontWeight='bold' letterSpacing={-0.5}>
-            Trade Tracker
+            Trade Scope
           </Typography>
         </Box>
 
         <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-          <Button
-            href='/trades'
-            variant='text'
-            color='inherit'
-            startIcon={<TableViewIcon />}
-            sx={{
-              fontWeight: 600,
-              textTransform: 'none',
-              borderRadius: 1.5,
-              px: 1.75,
-              py: 0.75,
-            }}
-          >
-            Browse
-          </Button>
+          {location.pathname !== '/trades' && (
+            <Button
+              href='/trades'
+              variant='text'
+              color='inherit'
+              startIcon={<TableViewIcon />}
+              sx={{
+                fontWeight: 600,
+                textTransform: 'none',
+                borderRadius: 1.5,
+                px: 1.75,
+                py: 0.75,
+              }}
+            >
+              Browse
+            </Button>
+          )}
 
           {location.pathname !== '/trades/new' && (
             <Button
