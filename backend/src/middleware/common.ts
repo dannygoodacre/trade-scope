@@ -21,10 +21,9 @@ export function mapZodErrorToProblemDetails(err: ZodError, instanceUri?: string)
       ? `Validation failed: ${err.issues[0].message}`
       : `${err.issues.length} validation errors occurred.`;
 
-  //TODO: type: a URL providing some validation error information
   return {
-    type: '',
-    title: 'Validation Failed',
+    type: 'about:blank',
+    title: 'Bad Request',
     status: 400,
     detail: detail,
     instance: instanceUri,
@@ -34,7 +33,8 @@ export function mapZodErrorToProblemDetails(err: ZodError, instanceUri?: string)
     })),
   };
 }
-export const notFoundHandler = (_req: Request, _res: Response, next: NextFunction): void =>
+
+export const notFoundHandler = (_req: Request, _res: Response, next: NextFunction) =>
   next(new NotFoundError('Resource Not Found'));
 
 export const globalErrorHandler: ErrorRequestHandler = (err, req, res, _next) => {

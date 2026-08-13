@@ -23,7 +23,20 @@ export default function TransactionRow({ transaction, isSelected, onChange, onCl
   };
 
   return (
-    <TableRow hover role='checkbox' tabIndex={-1} key={transaction.id} selected={isSelected}>
+    <TableRow
+      role='checkbox'
+      tabIndex={-1}
+      key={transaction.id}
+      selected={isSelected}
+      sx={{
+        '&:hover': {
+          backgroundColor: 'inherit',
+        },
+        '&.Mui-selected:hover': {
+          backgroundColor: 'action.selected',
+        },
+      }}
+    >
       <TableCell padding='checkbox'>
         <Checkbox color='primary' checked={isSelected} onClick={() => onClick(transaction.id)} />
       </TableCell>

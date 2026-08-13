@@ -4,7 +4,7 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { IconButton, TableCell, TableRow } from '@mui/material';
 
 import { formatNumber } from '@/utils';
-import { formatDate } from '@/utils/numberFormatters.ts';
+import { formatDate } from '@/utils/numberFormatters';
 
 import Detail from './Detail';
 

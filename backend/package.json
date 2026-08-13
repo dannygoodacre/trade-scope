@@ -4,8 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "npx tsx watch src/server.ts",
-    "lint": "eslint ."
+    "dev": "npx tsx watch src/server.ts"
   },
   "dependencies": {
     "better-sqlite3": "^12.6.2",

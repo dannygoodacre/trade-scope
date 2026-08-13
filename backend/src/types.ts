@@ -21,7 +21,10 @@ export type TypedRequest<
   T['query'] extends Record<string, unknown> ? T['query'] : Record<string, unknown>
 >;
 
-export type CreateTradeInput = z.infer<typeof CreateTradeSchema>;
 export type CreateTradeRequest = z.infer<typeof CreateTradeRequestSchema>;
-export type GetTradeRequest = z.infer<typeof GetTradeRequestSchema>;
+
+export type CreateTradeInput = z.infer<typeof CreateTradeSchema>;
+
 export type DeleteTradeRequest = z.infer<typeof DeleteTradeRequestSchema>;
+
+export type GetTradeRequest = z.infer<typeof GetTradeRequestSchema>;

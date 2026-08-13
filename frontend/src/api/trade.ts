@@ -1,4 +1,4 @@
-import { get, post } from './client.ts';
+import { get, post } from './client';
 
 import type { ExecutionData, PaginatedTradesResponse, TradeData } from '@trade-scope/shared/types';
 

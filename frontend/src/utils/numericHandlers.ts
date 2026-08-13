@@ -1,4 +1,4 @@
-import { formatWithCommas, sanitizeAndParseFloat, sanitizeAndParseInteger } from '@/utils/index.ts';
+import { formatWithCommas, sanitizeAndParseFloat, sanitizeAndParseInteger } from '@/utils';
 
 import type { ChangeEvent } from 'react';
 

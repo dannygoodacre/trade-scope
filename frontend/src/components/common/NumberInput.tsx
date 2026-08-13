@@ -31,7 +31,6 @@ export default function NumberInput({
 
   const isInteger = typeof step === 'number' ? Number.isInteger(step) : Number.isInteger(Number(step));
 
-  // Sync internal state when external value prop changes
   if (value !== prevValue) {
     setPrevValue(value);
 
