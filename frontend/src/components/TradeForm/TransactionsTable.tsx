@@ -11,7 +11,7 @@ import {
   TableRow,
 } from '@mui/material';
 
-import TransactionsTableToolbar from '@/components/TradeForm/TransactionsTableToolbar.tsx';
+import TransactionsTableToolbar from '@/components/TradeForm/TransactionsTableToolbar';
 
 import TransactionRow from './TransactionRow';
 

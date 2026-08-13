@@ -1,7 +1,8 @@
 import { Box } from '@mui/material';
 
-import { TopBar, TradeHistory } from '@/components';
-import * as styles from '@/styles';
+import TopBar from '@/components/common/TopBar';
+import TradeHistory from '@/components/TradeHistory';
+import * as styles from '@/styles/common';
 
 export default function Trades() {
   return (

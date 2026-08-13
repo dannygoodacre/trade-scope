@@ -1,17 +1,5 @@
 export const formatNumber = (value: number | bigint): string => Intl.NumberFormat('en-GB').format(Number(value));
 
-export const formatWithCommas = (value: string): string => {
-  if (!value) {
-    return '';
-  }
-
-  const [integerPart, decimalPart] = value.split('.');
-
-  const formattedInteger = Number(integerPart).toLocaleString('en-GB');
-
-  return decimalPart != null ? `${formattedInteger}.${decimalPart}` : formattedInteger;
-};
-
 export const formatDate = (dateTime: string | number | Date): string => {
   const date = new Date(dateTime);
 

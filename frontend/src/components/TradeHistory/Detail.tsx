@@ -11,6 +11,7 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import dayjs from 'dayjs';
 
 import type { TradeWithExecutions } from '@trade-scope/shared/types';
 
@@ -126,9 +127,23 @@ export default function Detail({ trade, isOpen }: DetailProps) {
             }}
           >
             <Typography variant='body2' color='text.secondary'>
-              <Box component='span' sx={{ fontWeight: 600, color: 'text.primary', mr: 0.5 }}>
-                News:
-              </Box>
+              {trade.newsTime && (
+                <Box
+                  component='span'
+                  sx={{
+                    fontFamily: 'monospace',
+                    fontSize: '0.75rem',
+                    color: 'text.secondary',
+                    backgroundColor: 'action.selected',
+                    px: 0.75,
+                    py: 0.25,
+                    mr: 1,
+                    borderRadius: '4px',
+                  }}
+                >
+                  {dayjs(trade.newsTime).format('HH:mm:ss')}
+                </Box>
+              )}
 
               {trade.news}
             </Typography>

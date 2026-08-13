@@ -2,10 +2,10 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import Home from '@/pages/Home.tsx';
+import Home from '@/pages/Home';
 import NewTrade from '@/pages/NewTrade';
 import Trades from '@/pages/Trades';
-import { theme } from '@/styles';
+import theme from '@/styles/theme';
 
 export default function App() {
   const queryClient = new QueryClient();

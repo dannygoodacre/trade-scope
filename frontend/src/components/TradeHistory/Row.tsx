@@ -3,8 +3,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { IconButton, TableCell, TableRow } from '@mui/material';
 
-import { formatNumber } from '@/utils';
-import { formatDate } from '@/utils/numberFormatters';
+import { formatDate, formatNumber } from '@/utils/numberFormatters';
 
 import Detail from './Detail';
 

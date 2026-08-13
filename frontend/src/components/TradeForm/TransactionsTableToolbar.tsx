@@ -2,7 +2,7 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { IconButton, Toolbar, Tooltip, Typography } from '@mui/material';
 
-import * as commonStyles from '@/styles';
+import * as styles from '@/styles/flex';
 
 interface TransactionsTableToolbarProps {
   selected: number[];
@@ -18,12 +18,12 @@ export default function TransactionsTableToolbar({
   return (
     <Toolbar sx={{ ...(selected.length > 0 && { bgcolor: (theme) => theme.palette.action.selected }) }}>
       {selected.length > 0 ? (
-        <Typography sx={commonStyles.flexPercent(100)} color='inherit' variant='subtitle1' component='div'>
+        <Typography sx={styles.flexPercent(100)} color='inherit' variant='subtitle1' component='div'>
           {selected.length} selected
         </Typography>
       ) : (
         <>
-          <Typography sx={commonStyles.flexPercent(100)} variant='h6' id='tableTitle' component='div'>
+          <Typography sx={styles.flexPercent(100)} variant='h6' id='tableTitle' component='div'>
             Transactions
           </Typography>
           <Tooltip title='Add new transaction'>

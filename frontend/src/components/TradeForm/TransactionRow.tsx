@@ -1,8 +1,9 @@
 import { Checkbox, TableCell, TableRow } from '@mui/material';
 import dayjs from 'dayjs';
 
-import { SideToggleButton, TimePicker } from '@/components';
-import NumberInput from '@/components/common/NumberInput.tsx';
+import NumberInput from '@/components/common/NumberInput';
+import SideToggleButton from '@/components/common/SideToggleButton';
+import TimePicker from '@/components/common/TimePicker';
 
 import type { Side } from '@trade-scope/shared/enums';
 import type { Execution } from '@trade-scope/shared/types';
@@ -50,7 +51,7 @@ export default function TransactionRow({ transaction, isSelected, onChange, onCl
           value={
             typeof transaction.price === 'number' ? transaction.price : parseFloat(transaction.price as string) || 0
           }
-          onChange={(val) => onChange(transaction.id, 'price', val)}
+          onChange={(val) => onChange(transaction.id, 'price', val.toString())}
           sx={monospaceInputSx}
         />
       </TableCell>

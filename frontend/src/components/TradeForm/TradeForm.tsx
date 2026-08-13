@@ -3,7 +3,7 @@ import { Alert, Box, Button, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 
 import { addTrade } from '@/api/trade';
-import * as styles from '@/styles';
+import * as styles from '@/styles/common';
 import { ApiError } from '@/types';
 
 import Header from './Header';
@@ -54,15 +54,20 @@ export default function NewTrade() {
     };
 
     setExecutions(updatedTransactions);
+
     setTrade(finalTradeData);
+
     setIsSubmitted(true);
 
     try {
       await addTrade(trade, updatedTransactions);
 
       setStatus({ type: 'success', message: 'Trade saved successfully!' });
+
       setTrade(initialTradeState);
+
       setExecutions([]);
+
       setIsSubmitted(false);
     } catch (err: unknown) {
       let displayMessage: JSX.Element | string = 'An unexpected error occurred.';
@@ -95,7 +100,7 @@ export default function NewTrade() {
         <div style={{ fontWeight: 'bold', marginBottom: '4px' }}>{title}</div>
         {Object.entries(details.errors).map(([field, messages]) => (
           <div key={field} style={{ fontSize: '0.875rem' }}>
-            • <strong>{field}:</strong> {messages.join(', ')}
+            - <strong>{field}:</strong> {messages.join(', ')}
           </div>
         ))}
       </div>

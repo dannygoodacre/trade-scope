@@ -5,7 +5,7 @@ export const TradeDataShape = z.strictObject({
   date: z.iso.date(),
   float: z.coerce.number().int().positive(),
   news: z.string().nullish(),
-  newsTime: z.iso.time().nullish(),
+  newsTime: z.iso.datetime().nullish(),
   sector: z.string().min(1),
   symbol: z.string().min(1).toUpperCase(),
   volume: z.coerce.number().int().positive(),

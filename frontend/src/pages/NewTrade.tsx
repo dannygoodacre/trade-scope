@@ -1,7 +1,8 @@
 import { Box } from '@mui/material';
 
-import { TopBar, TradeForm } from '@/components';
-import * as styles from '@/styles';
+import TopBar from '@/components/common/TopBar';
+import TradeForm from '@/components/TradeForm';
+import * as styles from '@/styles/common';
 
 export default function NewTrade() {
   return (

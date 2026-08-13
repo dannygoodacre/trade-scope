@@ -1,10 +1,11 @@
 import { Box, TextField } from '@mui/material';
 import dayjs, { Dayjs } from 'dayjs';
 
-import { DatePicker, TimePicker } from '@/components';
-import NumberInput from '@/components/common/NumberInput.tsx';
-import * as commonStyles from '@/styles';
-import { isNullEmptyOrWhitespace } from '@/utils';
+import DatePicker from '@/components/common/DatePicker';
+import NumberInput from '@/components/common/NumberInput';
+import TimePicker from '@/components/common/TimePicker';
+import * as styles from '@/styles/flex';
+import { isNullEmptyOrWhitespace } from '@/utils/validators';
 
 import * as headerStyles from './Header.styles';
 
@@ -70,7 +71,7 @@ export default function Header({ trade, setTrade, isSubmitted }: TradeFormHeader
           onChange={handleSectorChange}
           error={isSubmitted && isNullEmptyOrWhitespace(trade.sector)}
           helperText={isSubmitted && isNullEmptyOrWhitespace(trade.sector) ? 'Must not be empty or whitespace.' : ''}
-          sx={commonStyles.flexPercent(50)}
+          sx={styles.flexPercent(50)}
         />
         <DatePicker
           label='Date'
@@ -78,7 +79,7 @@ export default function Header({ trade, setTrade, isSubmitted }: TradeFormHeader
           onChange={handleDateChange}
           defaultValue={dayjs()}
           maxDate={dayjs()}
-          sx={commonStyles.flexPercent(50)}
+          sx={styles.flexPercent(50)}
         />
       </Box>
 
@@ -95,7 +96,7 @@ export default function Header({ trade, setTrade, isSubmitted }: TradeFormHeader
               : ''
           }
           sx={{
-            ...commonStyles.flexPercent(50),
+            ...styles.flexPercent(50),
             '& .MuiInputBase-input': { fontFamily: 'monospace' },
           }}
         />
@@ -111,7 +112,7 @@ export default function Header({ trade, setTrade, isSubmitted }: TradeFormHeader
               : ''
           }
           sx={{
-            ...commonStyles.flexPercent(50),
+            ...styles.flexPercent(50),
             '& .MuiInputBase-input': { fontFamily: 'monospace' },
           }}
         />
@@ -123,7 +124,7 @@ export default function Header({ trade, setTrade, isSubmitted }: TradeFormHeader
           name='news'
           value={trade.news}
           onChange={handleNewsChange}
-          sx={commonStyles.flexPercent(75)}
+          sx={styles.flexPercent(75)}
         />
         <TimePicker
           label='Time'
