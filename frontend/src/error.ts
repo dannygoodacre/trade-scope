@@ -5,6 +5,7 @@ export class ApiError extends Error {
 
   constructor(message: string, details?: ValidationProblemDetails) {
     super(message);
+
     this.name = 'ApiError';
     this.details = details;
   }
