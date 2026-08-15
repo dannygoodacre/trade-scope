@@ -3,7 +3,7 @@ import { Alert, Box, Button, Snackbar, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 
 import { ApiError } from '@/error';
-import useNewTrade from '@/hooks/useNewTrade/useNewTrade';
+import useNewTrade from '@/hooks/useNewTrade';
 import * as styles from '@/styles/common';
 
 import ExecutionsTable from './ExecutionsTable';
