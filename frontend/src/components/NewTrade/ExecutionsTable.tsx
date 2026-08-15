@@ -69,14 +69,14 @@ export default function ExecutionsTable({ executions, setExecutions, isSubmitted
     if (selected.indexOf(id) === -1) {
       newSelected = newSelected.concat(selected, id);
     } else {
-      newSelected = selected.filter((transactionId) => transactionId !== id);
+      newSelected = selected.filter((executionId) => executionId !== id);
     }
 
     setSelected(newSelected);
   };
 
   const handleDelete = () => {
-    setExecutions(executions.filter((transaction) => !selected.includes(transaction.id)));
+    setExecutions(executions.filter((execution) => !selected.includes(execution.id)));
 
     setSelected([]);
   };
@@ -125,7 +125,7 @@ export default function ExecutionsTable({ executions, setExecutions, isSubmitted
             {executions.map((execution) => (
               <ExecutionRow
                 key={execution.id}
-                transaction={execution}
+                execution={execution}
                 isSelected={isSelected(execution.id)}
                 onChange={handleChange}
                 onClick={handleClick}
