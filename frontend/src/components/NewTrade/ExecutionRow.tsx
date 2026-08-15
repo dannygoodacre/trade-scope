@@ -9,7 +9,7 @@ import type { Side } from '@trade-scope/shared/enums';
 import type { Execution } from '@trade-scope/shared/types';
 import type { Dayjs } from 'dayjs';
 
-interface TransactionRowProps {
+interface ExecutionRowProps {
   transaction: Execution;
   isSelected: boolean;
   onChange: (id: number, fieldName: string, value: string | number | Side | Dayjs) => void;
@@ -20,7 +20,7 @@ const MONOSPACE_INPUT_SX = {
   '& .MuiInputBase-input': { fontFamily: 'monospace' },
 } as const;
 
-export default function TransactionRow({ transaction, isSelected, onChange, onClick }: TransactionRowProps) {
+export default function ExecutionRow({ transaction, isSelected, onChange, onClick }: ExecutionRowProps) {
   const handleTimeChange = (value: Dayjs | null) => onChange(transaction.id, 'madeAt', value?.toISOString() ?? '');
 
   return (

@@ -4,17 +4,13 @@ import { IconButton, Toolbar, Tooltip, Typography } from '@mui/material';
 
 import * as styles from '@/styles/flex';
 
-interface TransactionsTableToolbarProps {
+interface ExecutionsTableToolbarProps {
   selected: number[];
-  addTransaction: () => void;
+  addExecution: () => void;
   handleDelete: () => void;
 }
 
-export default function TransactionsTableToolbar({
-  selected,
-  addTransaction,
-  handleDelete,
-}: TransactionsTableToolbarProps) {
+export default function ExecutionsTableToolbar({ selected, addExecution, handleDelete }: ExecutionsTableToolbarProps) {
   return (
     <Toolbar sx={{ ...(selected.length > 0 && { bgcolor: (theme) => theme.palette.action.selected }) }}>
       {selected.length > 0 ? (
@@ -24,11 +20,11 @@ export default function TransactionsTableToolbar({
       ) : (
         <>
           <Typography sx={styles.flexPercent(100)} variant='h6' id='tableTitle' component='div'>
-            Transactions
+            Executions
           </Typography>
 
-          <Tooltip title='Add new transaction'>
-            <IconButton color='primary' onClick={addTransaction}>
+          <Tooltip title='Add new execution'>
+            <IconButton color='primary' onClick={addExecution}>
               <AddIcon />
             </IconButton>
           </Tooltip>

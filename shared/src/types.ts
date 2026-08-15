@@ -1,5 +1,10 @@
 import { ExecutionDataShape, ExecutionShape } from '@trade-scope/shared/schemas/execution.schema';
-import { TradeDataShape, TradeShape, TradeWithExecutionsShape } from '@trade-scope/shared/schemas/trade.schema';
+import {
+  NewTradeShape,
+  TradeDataShape,
+  TradeShape,
+  TradeWithExecutionsShape,
+} from '@trade-scope/shared/schemas/trade.schema';
 import { z } from 'zod';
 
 export type ExecutionData = z.infer<typeof ExecutionDataShape>;
@@ -11,6 +16,8 @@ export type TradeData = z.infer<typeof TradeDataShape>;
 export type Trade = z.infer<typeof TradeShape>;
 
 export type TradeWithExecutions = z.infer<typeof TradeWithExecutionsShape>;
+
+export type NewTrade = z.infer<typeof NewTradeShape>;
 
 export interface PaginatedTradesResponse {
   trades: TradeWithExecutions[];

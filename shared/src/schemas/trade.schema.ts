@@ -1,4 +1,4 @@
-import { ExecutionShape } from '@trade-scope/shared/schemas/execution.schema';
+import { ExecutionDataShape, ExecutionShape } from '@trade-scope/shared/schemas/execution.schema';
 import { z } from 'zod';
 
 export const TradeDataShape = z.strictObject({
@@ -17,4 +17,8 @@ export const TradeShape = TradeDataShape.extend({
 
 export const TradeWithExecutionsShape = TradeShape.extend({
   executions: z.array(ExecutionShape).min(2),
+});
+
+export const NewTradeShape = TradeDataShape.extend({
+  executions: z.array(ExecutionDataShape).min(2),
 });

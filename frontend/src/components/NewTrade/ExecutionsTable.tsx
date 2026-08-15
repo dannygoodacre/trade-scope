@@ -1,32 +1,21 @@
 import { useCallback, useEffect, useState } from 'react';
-import {
-  Checkbox,
-  FormControl,
-  FormHelperText,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-} from '@mui/material';
+import { Checkbox, FormControl, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 
-import TransactionsTableToolbar from '@/components/TradeForm/TransactionsTableToolbar';
-
-import TransactionRow from './TransactionRow';
+import ExecutionRow from './ExecutionRow.tsx';
+import ExecutionsTableToolbar from './ExecutionsTableToolbar.tsx';
 
 import type { Side } from '@trade-scope/shared/enums';
 import type { Execution } from '@trade-scope/shared/types';
 import type { Dayjs } from 'dayjs';
 import type { ChangeEvent } from 'react';
 
-interface TransactionsTableProps {
+interface ExecutionsTableProps {
   executions: Execution[];
   setExecutions: (executions: Execution[]) => void;
   isSubmitted: boolean;
 }
 
-export default function TransactionsTable({ executions, setExecutions, isSubmitted }: TransactionsTableProps) {
+export default function ExecutionsTable({ executions, setExecutions, isSubmitted }: ExecutionsTableProps) {
   const [selected, setSelected] = useState<number[]>([]);
 
   useEffect(() => {
@@ -44,7 +33,7 @@ export default function TransactionsTable({ executions, setExecutions, isSubmitt
     }
   }, [setExecutions, executions]);
 
-  const addTransaction = useCallback(() => {
+  const addExecution = useCallback(() => {
     const nextId = executions.length > 0 ? Math.max(...executions.map((t) => t.id)) + 1 : 1;
 
     setExecutions([
@@ -61,17 +50,17 @@ export default function TransactionsTable({ executions, setExecutions, isSubmitt
   }, [setExecutions, executions]);
 
   const handleChange = (id: number, fieldName: string, value: string | number | Side | Dayjs) => {
-    const newTransactions = executions.map((transaction) => {
-      if (transaction.id === id) {
+    const newExecution = executions.map((execution) => {
+      if (execution.id === id) {
         return {
-          ...transaction,
+          ...execution,
           [fieldName]: value,
         };
       }
-      return transaction;
+      return execution;
     });
 
-    setExecutions(newTransactions);
+    setExecutions(newExecution);
   };
 
   const handleClick = (id: number) => {
@@ -106,7 +95,7 @@ export default function TransactionsTable({ executions, setExecutions, isSubmitt
   return (
     <FormControl error={isSubmitted && executions.length < 2} fullWidth>
       <Paper variant='outlined' sx={{ borderColor: isSubmitted && executions.length < 2 ? 'error.main' : undefined }}>
-        <TransactionsTableToolbar selected={selected} addTransaction={addTransaction} handleDelete={handleDelete} />
+        <ExecutionsTableToolbar selected={selected} addExecution={addExecution} handleDelete={handleDelete} />
 
         <Table size='small'>
           <TableHead>
@@ -133,11 +122,11 @@ export default function TransactionsTable({ executions, setExecutions, isSubmitt
           </TableHead>
 
           <TableBody>
-            {executions.map((transaction) => (
-              <TransactionRow
-                key={transaction.id}
-                transaction={transaction}
-                isSelected={isSelected(transaction.id)}
+            {executions.map((execution) => (
+              <ExecutionRow
+                key={execution.id}
+                transaction={execution}
+                isSelected={isSelected(execution.id)}
                 onChange={handleChange}
                 onClick={handleClick}
               />
@@ -145,8 +134,6 @@ export default function TransactionsTable({ executions, setExecutions, isSubmitt
           </TableBody>
         </Table>
       </Paper>
-
-      {isSubmitted && executions.length < 2 && <FormHelperText>At least two transactions are required</FormHelperText>}
     </FormControl>
   );
 }
