@@ -1,14 +1,13 @@
-import { formatNumber } from "@/utils";
-import { foo } from "@/utils/numberFormatters.ts";
 import { useState } from 'react';
-
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import { IconButton, TableCell, TableRow } from '@mui/material';
+
+import { formatDate, formatNumber } from '@/utils';
 
 import Detail from './Detail';
 
-import { IconButton, TableCell, TableRow } from '@mui/material';
-import type { TradeWithExecutions } from '@trade-tracker/shared/types';
+import type { TradeWithExecutions } from '@trade-scope/shared/types';
 
 interface TradeRowProps {
   trade: TradeWithExecutions;
@@ -21,15 +20,11 @@ export default function Row({ trade }: TradeRowProps) {
 
   return (
     <>
-      <TableRow
-        hover
-        onClick={toggleOpen}
-        sx={{ cursor: 'pointer' }}
-      >
+      <TableRow hover onClick={toggleOpen} sx={{ cursor: 'pointer' }}>
         <TableCell>
           <IconButton
-            aria-label="expand row"
-            size="small"
+            aria-label='expand row'
+            size='small'
             onClick={(e) => {
               e.stopPropagation();
               toggleOpen();
@@ -43,26 +38,22 @@ export default function Row({ trade }: TradeRowProps) {
 
         <TableCell width={150}>{trade.sector}</TableCell>
 
-        <TableCell
-          width={120}
-          align="right"
-          sx={{ fontFamily: 'monospace' }}
-        >
+        <TableCell width={120} align='right' sx={{ fontFamily: 'monospace' }}>
           {formatNumber(trade.volume)}
         </TableCell>
 
-        <TableCell
-          width={150}
-          align="right"
-          sx={{ fontFamily: 'monospace' }}
-        >
-          {foo(trade.date)}
+        <TableCell width={120} align='right' sx={{ fontFamily: 'monospace' }}>
+          {formatNumber(trade.float)}
+        </TableCell>
+
+        <TableCell width={150} align='right' sx={{ fontFamily: 'monospace' }}>
+          {formatDate(trade.date)}
         </TableCell>
       </TableRow>
 
       {isOpen && (
         <TableRow>
-          <TableCell colSpan={5}>
+          <TableCell colSpan={6}>
             <Detail trade={trade} isOpen={isOpen} />
           </TableCell>
         </TableRow>

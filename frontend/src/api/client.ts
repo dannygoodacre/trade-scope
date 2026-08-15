@@ -1,7 +1,7 @@
 import { API_URL } from '@/config';
-import { ApiError } from '@/types';
+import { ApiError } from '@/error';
 
-import type { ValidationProblemDetails } from '@/types';
+import type { ValidationProblemDetails } from '@trade-scope/shared/types';
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 
@@ -47,16 +47,16 @@ async function request<TResponse, TBody = unknown>(
   method: HttpMethod,
   path: string,
   body?: TBody,
-  headers?: Record<string, string>
+  headers?: Record<string, string>,
 ): Promise<TResponse> {
   const res = await fetch(`${API_URL}${path}`, {
     method,
     credentials: 'include',
     headers: {
       ...(body !== undefined ? { 'Content-Type': 'application/json' } : {}),
-      ...headers
+      ...headers,
     },
-    body: body !== undefined ? JSON.stringify(body) : undefined
+    body: body !== undefined ? JSON.stringify(body) : undefined,
   });
 
   return handleResponse<TResponse>(res);

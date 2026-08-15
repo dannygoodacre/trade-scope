@@ -1,0 +1,10 @@
+{
+  "plugins": ["@ianvs/prettier-plugin-sort-imports"],
+  "importOrder": ["^(react|react-dom)$", "^node:", "<THIRD_PARTY_MODULES>", "", "^@/(.*)$", "", "^[./]", "", "<TYPES>"],
+  "importOrderTypeScriptVersion": "5.0.0",
+  "printWidth": 120,
+  "singleQuote": true,
+  "jsxSingleQuote": true,
+  "trailingComma": "all",
+  "arrowParens": "always"
+}

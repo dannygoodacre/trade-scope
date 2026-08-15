@@ -1,6 +1,29 @@
 import { useMemo } from 'react';
-import { TableRow, TableCell, Collapse, Typography, TableHead, Table, TableBody, Chip, Box, Paper } from '@mui/material';
-import type { TradeWithExecutions } from '@trade-tracker/shared/types';
+import {
+  Box,
+  Chip,
+  Collapse,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@mui/material';
+import dayjs from 'dayjs';
+
+import type { TradeWithExecutions } from '@trade-scope/shared/types';
+
+const TABLE_ROW_HEADING_SX = {
+  color: 'text.secondary',
+  fontWeight: 600,
+} as const;
+
+const TABLE_ROW_CELL_SX = {
+  fontFamily: 'monospace',
+  fontSize: '0.8125rem',
+} as const;
 
 interface DetailProps {
   trade: TradeWithExecutions;
@@ -9,13 +32,11 @@ interface DetailProps {
 
 export default function Detail({ trade, isOpen }: DetailProps) {
   const sortedExecutions = useMemo(() => {
-    return [...trade.executions].sort(
-      (a, b) => new Date(a.madeAt).getTime() - new Date(b.madeAt).getTime()
-    );
+    return [...trade.executions].sort((a, b) => new Date(a.madeAt).getTime() - new Date(b.madeAt).getTime());
   }, [trade.executions]);
 
   return (
-    <Collapse in={isOpen} timeout="auto" unmountOnExit>
+    <Collapse in={isOpen} timeout='auto' unmountOnExit>
       <Paper
         elevation={0}
         sx={{
@@ -27,14 +48,26 @@ export default function Detail({ trade, isOpen }: DetailProps) {
           borderRadius: 1.5,
         }}
       >
-        <Table size="small" sx={{ mb: trade.news ? 2 : 0 }}>
+        <Table size='small' sx={{ mb: trade.news ? 2 : 0 }}>
           <TableHead>
             <TableRow>
               <TableCell sx={{ color: 'text.secondary', fontWeight: 600 }}>Time</TableCell>
-              <TableCell align="center" sx={{ color: 'text.secondary', fontWeight: 600 }}>Side</TableCell>
-              <TableCell align="right" sx={{ color: 'text.secondary', fontWeight: 600 }}>Price</TableCell>
-              <TableCell align="right" sx={{ color: 'text.secondary', fontWeight: 600 }}>Order Qty</TableCell>
-              <TableCell align="right" sx={{ color: 'text.secondary', fontWeight: 600 }}>Filled Qty</TableCell>
+
+              <TableCell align='center' sx={TABLE_ROW_HEADING_SX}>
+                Side
+              </TableCell>
+
+              <TableCell align='right' sx={TABLE_ROW_HEADING_SX}>
+                Price
+              </TableCell>
+
+              <TableCell align='right' sx={TABLE_ROW_HEADING_SX}>
+                Order Qty
+              </TableCell>
+
+              <TableCell align='right' sx={TABLE_ROW_HEADING_SX}>
+                Filled Qty
+              </TableCell>
             </TableRow>
           </TableHead>
 
@@ -42,22 +75,20 @@ export default function Detail({ trade, isOpen }: DetailProps) {
             {sortedExecutions.map((execution) => {
               const isBuy = execution.side === 0;
               return (
-                <TableRow
-                  key={execution.id}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
+                <TableRow key={execution.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                   <TableCell sx={{ fontFamily: 'monospace', fontSize: '0.8125rem' }}>
                     {new Date(execution.madeAt).toLocaleTimeString(undefined, {
                       hour: '2-digit',
                       minute: '2-digit',
                       second: '2-digit',
-                      hour12: false
+                      hour12: false,
                     })}
                   </TableCell>
-                  <TableCell align="center">
+
+                  <TableCell align='center'>
                     <Chip
-                      label={isBuy ? "BUY" : "SELL"}
-                      size="small"
+                      label={isBuy ? 'BUY' : 'SELL'}
+                      size='small'
                       sx={{
                         width: 52,
                         height: 20,
@@ -72,18 +103,21 @@ export default function Detail({ trade, isOpen }: DetailProps) {
                         '& .MuiChip-label': {
                           px: 0,
                           width: '100%',
-                          textAlign: 'center'
-                        }
+                          textAlign: 'center',
+                        },
                       }}
                     />
                   </TableCell>
-                  <TableCell align="right" sx={{ fontFamily: 'monospace', fontSize: '0.8125rem' }}>
+
+                  <TableCell align='right' sx={TABLE_ROW_CELL_SX}>
                     {execution.price}
                   </TableCell>
-                  <TableCell align="right" sx={{ fontFamily: 'monospace', fontSize: '0.8125rem' }}>
+
+                  <TableCell align='right' sx={TABLE_ROW_CELL_SX}>
                     {execution.order}
                   </TableCell>
-                  <TableCell align="right" sx={{ fontFamily: 'monospace', fontSize: '0.8125rem' }}>
+
+                  <TableCell align='right' sx={TABLE_ROW_CELL_SX}>
                     {execution.filled}
                   </TableCell>
                 </TableRow>
@@ -99,13 +133,28 @@ export default function Detail({ trade, isOpen }: DetailProps) {
               backgroundColor: 'action.hover',
               borderRadius: 1,
               borderLeft: '3px solid',
-              borderColor: 'primary.main'
+              borderColor: 'primary.main',
             }}
           >
-            <Typography variant="body2" color="text.secondary">
-              <Box component="span" sx={{ fontWeight: 600, color: 'text.primary', mr: 0.5 }}>
-                News:
-              </Box>
+            <Typography variant='body2' color='text.secondary'>
+              {trade.newsTime && (
+                <Box
+                  component='span'
+                  sx={{
+                    fontFamily: 'monospace',
+                    fontSize: '0.75rem',
+                    color: 'text.secondary',
+                    backgroundColor: 'action.selected',
+                    px: 0.75,
+                    py: 0.25,
+                    mr: 1,
+                    borderRadius: '4px',
+                  }}
+                >
+                  {dayjs(trade.newsTime).format('HH:mm:ss')}
+                </Box>
+              )}
+
               {trade.news}
             </Typography>
           </Box>

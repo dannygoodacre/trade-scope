@@ -1,11 +1,13 @@
-import dayjs from 'dayjs';
-import type { Dayjs } from 'dayjs';
 import { Checkbox, TableCell, TableRow } from '@mui/material';
+import dayjs from 'dayjs';
 
-import { SideToggleButton, TimePicker } from '@/components';
-import NumberInput from '@/components/NumberInput';
-import type { Side } from '@trade-tracker/shared/enums';
-import type { Execution } from '@trade-tracker/shared/types';
+import NumberInput from '@/components/common/NumberInput';
+import SideToggleButton from '@/components/common/SideToggleButton';
+import TimePicker from '@/components/common/TimePicker';
+
+import type { Side } from '@trade-scope/shared/enums';
+import type { Execution } from '@trade-scope/shared/types';
+import type { Dayjs } from 'dayjs';
 
 interface TransactionRowProps {
   transaction: Execution;
@@ -14,42 +16,43 @@ interface TransactionRowProps {
   onClick: (id: number) => void;
 }
 
-export default function TransactionRow({ transaction, isSelected, onChange, onClick }: TransactionRowProps) {
-  const handleTimeChange = (value: Dayjs | null) =>
-    onChange(transaction.id, 'madeAt', value?.toISOString() ?? '');
+const MONOSPACE_INPUT_SX = {
+  '& .MuiInputBase-input': { fontFamily: 'monospace' },
+} as const;
 
-  const monospaceInputSx = {
-    '& .MuiInputBase-input': { fontFamily: 'monospace' },
-  };
+export default function TransactionRow({ transaction, isSelected, onChange, onClick }: TransactionRowProps) {
+  const handleTimeChange = (value: Dayjs | null) => onChange(transaction.id, 'madeAt', value?.toISOString() ?? '');
 
   return (
     <TableRow
-      hover
-      role="checkbox"
+      role='checkbox'
       tabIndex={-1}
       key={transaction.id}
       selected={isSelected}
+      sx={{
+        '&:hover': {
+          backgroundColor: 'inherit',
+        },
+        '&.Mui-selected:hover': {
+          backgroundColor: 'action.selected',
+        },
+      }}
     >
-      <TableCell padding="checkbox">
-        <Checkbox
-          color="primary"
-          checked={isSelected}
-          onClick={() => onClick(transaction.id)}
-        />
+      <TableCell padding='checkbox'>
+        <Checkbox color='primary' checked={isSelected} onClick={() => onClick(transaction.id)} />
       </TableCell>
 
       <TableCell>
-        <SideToggleButton
-          id={transaction.id}
-          onToggle={(id, value) => onChange(id, 'side', value)}
-        />
+        <SideToggleButton id={transaction.id} onToggle={(id, value) => onChange(id, 'side', value)} />
       </TableCell>
 
       <TableCell>
         <NumberInput
-          value={typeof transaction.price === 'number' ? transaction.price : parseFloat(transaction.price as string) || 0}
-          onChange={(val) => onChange(transaction.id, 'price', val)}
-          sx={monospaceInputSx}
+          value={
+            typeof transaction.price === 'number' ? transaction.price : parseFloat(transaction.price as string) || 0
+          }
+          onChange={(val) => onChange(transaction.id, 'price', val.toString())}
+          sx={MONOSPACE_INPUT_SX}
         />
       </TableCell>
 
@@ -58,7 +61,7 @@ export default function TransactionRow({ transaction, isSelected, onChange, onCl
           value={transaction.order}
           step={1}
           onChange={(val) => onChange(transaction.id, 'order', val)}
-          sx={monospaceInputSx}
+          sx={MONOSPACE_INPUT_SX}
         />
       </TableCell>
 
@@ -67,7 +70,7 @@ export default function TransactionRow({ transaction, isSelected, onChange, onCl
           value={transaction.filled}
           step={1}
           onChange={(val) => onChange(transaction.id, 'filled', val)}
-          sx={monospaceInputSx}
+          sx={MONOSPACE_INPUT_SX}
         />
       </TableCell>
 

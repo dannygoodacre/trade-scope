@@ -1,6 +1,6 @@
+import { ExecutionDataShape, ExecutionShape } from '@trade-scope/shared/schemas/execution.schema';
+import { TradeDataShape, TradeShape, TradeWithExecutionsShape } from '@trade-scope/shared/schemas/trade.schema';
 import { z } from 'zod';
-
-import { ExecutionDataShape, ExecutionShape, TradeDataShape, TradeShape, TradeWithExecutionsShape } from '@trade-tracker/shared/schemata';
 
 export type ExecutionData = z.infer<typeof ExecutionDataShape>;
 
@@ -8,7 +8,6 @@ export type Execution = z.infer<typeof ExecutionShape>;
 
 export type TradeData = z.infer<typeof TradeDataShape>;
 
-// TODO: Is this only needed by the frontend?
 export type Trade = z.infer<typeof TradeShape>;
 
 export type TradeWithExecutions = z.infer<typeof TradeWithExecutionsShape>;
@@ -18,4 +17,17 @@ export interface PaginatedTradesResponse {
   totalItems: number;
   totalPages: number;
   currentPage: number;
+}
+
+export interface ValidationProblemDetails {
+  type: string;
+  title: string;
+  status: number;
+  detail: string;
+  instance?: string;
+  traceId?: string;
+  errors?: Array<{
+    pointer: string;
+    message: string;
+  }>;
 }

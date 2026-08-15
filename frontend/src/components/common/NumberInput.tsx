@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { TextField } from '@mui/material';
+
+import type { TextFieldProps } from '@mui/material';
 import type { ChangeEvent, FocusEvent, KeyboardEvent } from 'react';
-import { TextField, type TextFieldProps } from '@mui/material';
 
 export type NumberInputProps = Omit<TextFieldProps, 'onChange' | 'value'> & {
   value?: number;
@@ -25,13 +27,10 @@ export default function NumberInput({
   ...restProps
 }: NumberInputProps) {
   const [prevValue, setPrevValue] = useState<number | undefined>(value);
-  const [displayValue, setDisplayValue] = useState<string>(
-    value === undefined || value === 0 ? '' : String(value)
-  );
+  const [displayValue, setDisplayValue] = useState<string>(value === undefined || value === 0 ? '' : String(value));
 
   const isInteger = typeof step === 'number' ? Number.isInteger(step) : Number.isInteger(Number(step));
 
-  // Sync internal state when external value prop changes
   if (value !== prevValue) {
     setPrevValue(value);
 
@@ -124,7 +123,7 @@ export default function NumberInput({
           min,
           inputMode: isInteger ? 'numeric' : 'decimal',
           autocomplete: 'off',
-          ...slotProps?.htmlInput
+          ...slotProps?.htmlInput,
         },
       }}
       sx={{

@@ -1,6 +1,6 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
 import * as path from 'path';
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [
@@ -13,7 +13,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
-      '@trade-tracker/shared': path.resolve(__dirname, '../shared/src'),
+      '@trade-scope/shared': path.resolve(__dirname, '../shared/src'),
     },
   },
-})
+});

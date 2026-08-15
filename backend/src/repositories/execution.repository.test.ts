@@ -1,11 +1,12 @@
-import { describe, it, expect, beforeAll, beforeEach, afterAll } from 'vitest';
-import { Kysely, SqliteDialect } from 'kysely';
-import { DB } from '@/database/db';
-import * as path from 'node:path';
 import * as fs from 'fs';
+import * as path from 'node:path';
+import { Side } from '@trade-scope/shared/enums';
 import Database from 'better-sqlite3';
+import { Kysely, SqliteDialect } from 'kysely';
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
+
+import { DB } from '@/database/db';
 import { addExecutions, deleteExecutionsByTradeId } from '@/repositories/execution.repository';
-import { Side } from '@trade-tracker/shared/enums';
 import { addTrade } from '@/repositories/trade.repository';
 
 describe('Execution Repository', () => {
@@ -81,7 +82,7 @@ describe('Execution Repository', () => {
         expect.objectContaining({ id: expect.any(Number) }),
       ]);
 
-      executions.forEach(execution => {
+      executions.forEach((execution) => {
         expect(Number.isInteger(execution.id)).toBe(true);
 
         expect(execution.id).toBeGreaterThan(0);
@@ -152,22 +153,20 @@ describe('Execution Repository', () => {
       expect(result.numDeletedRows).toEqual(1n);
 
       const executionsForTrade1 = await database
-      .selectFrom('executions')
-      .selectAll()
-      .where('tradeId', '=', tradeId2)
-      .execute();
+        .selectFrom('executions')
+        .selectAll()
+        .where('tradeId', '=', tradeId2)
+        .execute();
 
       expect(executionsForTrade1).toHaveLength(2);
 
-      expect(executionsForTrade1).toEqual(newExecutions
-      .slice(1, 3)
-      .map(x => ({ ...x, id: expect.any(Number) })));
+      expect(executionsForTrade1).toEqual(newExecutions.slice(1, 3).map((x) => ({ ...x, id: expect.any(Number) })));
 
       const executionsForTrade2 = await database
-      .selectFrom('executions')
-      .selectAll()
-      .where('tradeId', '=', tradeId1)
-      .execute();
+        .selectFrom('executions')
+        .selectAll()
+        .where('tradeId', '=', tradeId1)
+        .execute();
 
       expect(executionsForTrade2).toHaveLength(0);
     });

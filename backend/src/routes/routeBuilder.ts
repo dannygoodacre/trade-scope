@@ -1,14 +1,17 @@
 import { Router } from 'express';
-import { type ZodType } from 'zod';
+
 import { methodsAllowed, validate } from '@/middleware/routing';
+
+type ValidationSchema = Parameters<typeof validate>[0];
 
 type EndpointConfig = [
   method: 'get' | 'post' | 'put' | 'delete' | 'patch',
-  schema: ZodType,
-  handler: any,
- ];
+  schema: ValidationSchema,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  handler: (...args: any[]) => any,
+];
 
-export function buildRoutes(routes: Record<string, EndpointConfig[]>) : Router {
+export function buildRoutes(routes: Record<string, EndpointConfig[]>): Router {
   const router = Router();
 
   for (const [path, configs] of Object.entries(routes)) {

@@ -1,19 +1,21 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { createTrade, deleteTrade } from './trade.service';
-import * as tradeRepository from '@repositories/trade.repository';
-import * as executionRepository from '@repositories/execution.repository';
+import { Side } from '@trade-scope/shared/enums';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+
 import { AppError, NotFoundError } from '@/error';
+import * as executionRepository from '@/repositories/execution.repository';
+import * as tradeRepository from '@/repositories/trade.repository';
 
-vi.mock('@repositories/trade.repository');
+import { createTrade, deleteTrade } from './trade.service';
 
-vi.mock('@repositories/execution.repository');
+vi.mock('@/repositories/execution.repository');
+vi.mock('@/repositories/trade.repository');
 
 const testTransaction = 'Mock Transaction';
 
 vi.mock('@/database', () => ({
   database: {
     transaction: vi.fn(() => ({
-      execute: vi.fn(x => x(testTransaction)),
+      execute: vi.fn((x) => x(testTransaction)),
     })),
   },
 }));
@@ -26,7 +28,7 @@ describe('Trade Service', () => {
   describe('createTrade', () => {
     it('should add a trade and its executions', async () => {
       // Arrange
-      const input = {
+      const requestTradeData = {
         date: 'Input Date',
         float: 123,
         news: 'Input News',
@@ -34,23 +36,24 @@ describe('Trade Service', () => {
         sector: 'Input Sector',
         symbol: 'Input Symbol',
         volume: 456,
-        executions: [
-          {
-            filled: 789,
-            madeAt: 'Input Made At 1',
-            order: 101,
-            Price: 'Input Price 1',
-            side: 'Input Side 1',
-          },
-          {
-            filled: 112,
-            madeAt: 'Input Made At 2',
-            order: 131,
-            Price: 'Input Price 2',
-            side: 'Input Side 2',
-          },
-        ],
       };
+
+      const requestExecutions = [
+        {
+          filled: 789,
+          madeAt: 'Input Made At 1',
+          order: 101,
+          price: 'Input Price 1',
+          side: Side.Buy,
+        },
+        {
+          filled: 112,
+          madeAt: 'Input Made At 2',
+          order: 131,
+          price: 'Input Price 2',
+          side: Side.Sell,
+        },
+      ];
 
       const testTradeId = 999;
 
@@ -68,7 +71,7 @@ describe('Trade Service', () => {
       vi.mocked(tradeRepository.addTrade).mockResolvedValue(mockTrade);
 
       // Act
-      const result = await createTrade(input as any);
+      const result = await createTrade(requestTradeData, requestExecutions);
 
       // Assert
       expect(result).toBe(testTradeId);
@@ -90,16 +93,16 @@ describe('Trade Service', () => {
           filled: 789,
           madeAt: 'Input Made At 1',
           order: 101,
-          Price: 'Input Price 1',
-          side: 'Input Side 1',
+          price: 'Input Price 1',
+          side: Side.Buy,
           tradeId: testTradeId,
         },
         {
           filled: 112,
           madeAt: 'Input Made At 2',
           order: 131,
-          Price: 'Input Price 2',
-          side: 'Input Side 2',
+          price: 'Input Price 2',
+          side: Side.Sell,
           tradeId: testTradeId,
         },
       ];
@@ -116,8 +119,7 @@ describe('Trade Service', () => {
       vi.mocked(tradeRepository.tradeExists).mockResolvedValue(false);
 
       // Act & Assert
-      try
-      {
+      try {
         await deleteTrade(inputTradeId);
       } catch (error) {
         expect(error).toBeInstanceOf(AppError);

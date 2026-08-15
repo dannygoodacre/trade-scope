@@ -1,14 +1,25 @@
-import type { ChangeEvent } from 'react';
-import dayjs, { Dayjs } from 'dayjs';
 import { Box, TextField } from '@mui/material';
+import dayjs, { Dayjs } from 'dayjs';
 
-import { DatePicker, TimePicker } from '@/components';
-import NumberInput from '@/components/NumberInput';
-
-import * as headerStyles from './Header.styles';
-import * as commonStyles from '@/styles';
+import DatePicker from '@/components/common/DatePicker';
+import NumberInput from '@/components/common/NumberInput';
+import TimePicker from '@/components/common/TimePicker';
 import { isNullEmptyOrWhitespace } from '@/utils';
-import type { Trade } from '@trade-tracker/shared/types';
+
+import type { Trade } from '@trade-scope/shared/types';
+import type { ChangeEvent } from 'react';
+
+const FORM_ROW_SX = {
+  display: 'flex',
+  gap: 2,
+  mb: 3,
+  width: '100%',
+} as const;
+
+const MONOSPACE_FLEX_INPUT_SX = {
+  flex: 1,
+  '& .MuiInputBase-input': { fontFamily: 'monospace' },
+} as const;
 
 interface TradeFormHeaderProps {
   trade: Trade;
@@ -17,40 +28,56 @@ interface TradeFormHeaderProps {
 }
 
 export default function Header({ trade, setTrade, isSubmitted }: TradeFormHeaderProps) {
-  const handleSymbolChange = (event: ChangeEvent<HTMLInputElement>) =>
+  const handleSymbolChange = (event: ChangeEvent<HTMLInputElement>) => {
     setTrade({
       ...trade,
-      symbol: event.target.value.replace(' ', '').toUpperCase()
+      symbol: event.target.value.replace(/\s/g, '').toUpperCase(),
     });
+  };
 
-  const handleSectorChange = (event: ChangeEvent<HTMLInputElement>) =>
+  const handleSectorChange = (event: ChangeEvent<HTMLInputElement>) => {
     setTrade({
       ...trade,
-      sector: event.target.value
+      sector: event.target.value,
     });
+  };
 
-  const handleDateChange = (value: Dayjs | null) =>
-    setTrade({
-      ...trade,
-      date: value?.startOf('day')?.format('YYYY-MM-DD') ?? ''
-    });
+  const handleDateChange = (value: Dayjs | null) => {
+    const newDateStr = value?.startOf('day')?.format('YYYY-MM-DD') ?? '';
 
-  const handleNewsChange = (event: ChangeEvent<HTMLInputElement>) =>
+    let updatedNewsTime = trade.newsTime;
+
+    if (trade.newsTime && value) {
+      const existingTime = dayjs(trade.newsTime);
+      updatedNewsTime = value
+        .hour(existingTime.hour())
+        .minute(existingTime.minute())
+        .second(0)
+        .millisecond(0)
+        .toISOString();
+    }
+
     setTrade({
       ...trade,
-      news: event.target.value
+      date: newDateStr,
+      newsTime: updatedNewsTime,
     });
+  };
+
+  const handleNewsChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setTrade({
+      ...trade,
+      news: event.target.value,
+    });
+  };
 
   const handleNewsTimeChange = (value: Dayjs | null) => {
     if (!value) {
-      setTrade({
-        ...trade,
-        newsTime: ''
-      });
+      setTrade({ ...trade, newsTime: '' });
       return;
     }
 
-    const mergedDateTime = dayjs(trade.date)
+    const mergedDateTime = dayjs(trade.date || undefined)
       .hour(value.hour())
       .minute(value.minute())
       .second(0)
@@ -58,85 +85,83 @@ export default function Header({ trade, setTrade, isSubmitted }: TradeFormHeader
 
     setTrade({
       ...trade,
-      newsTime: mergedDateTime.toISOString()
+      newsTime: mergedDateTime.toISOString(),
     });
   };
 
+  const isSectorInvalid = isSubmitted && isNullEmptyOrWhitespace(trade.sector);
+
+  const isVolumeInvalid = isSubmitted && (!trade.volume || trade.volume <= 0);
+
+  const isFloatInvalid = isSubmitted && (!trade.float || trade.float <= 0);
+
+  const hasNewsText = !isNullEmptyOrWhitespace(trade.news);
+
+  const isNewsTimeMissing = isNullEmptyOrWhitespace(trade.newsTime);
+
+  const isNewsTimeInvalid = isSubmitted && hasNewsText && isNewsTimeMissing;
+
   return (
-    <Box sx={headerStyles.formHeader}>
-      <Box sx={headerStyles.formRow}>
+    <Box sx={{ width: '100%', mb: 1 }}>
+      <Box sx={FORM_ROW_SX}>
+        <TextField required label='Symbol' value={trade.symbol} onChange={handleSymbolChange} sx={{ flex: 1 }} />
+
         <TextField
           required
-          label="Symbol"
-          value={trade.symbol}
-          onChange={handleSymbolChange}
-        />
-        <TextField
-          required
-          label="Sector"
+          label='Sector'
           value={trade.sector}
           onChange={handleSectorChange}
-          error={isSubmitted && isNullEmptyOrWhitespace(trade.sector)}
-          helperText={isSubmitted && isNullEmptyOrWhitespace(trade.sector) ? 'Must not be empty or whitespace.' : ''}
-          sx={commonStyles.flexPercent(50)}
+          error={isSectorInvalid}
+          helperText={isSectorInvalid ? 'Must not be empty or whitespace.' : ''}
+          sx={{ flex: 2 }}
         />
+
         <DatePicker
-          label="Date"
+          label='Date'
           value={trade.date ? dayjs(trade.date) : dayjs()}
           onChange={handleDateChange}
           defaultValue={dayjs()}
           maxDate={dayjs()}
-          sx={commonStyles.flexPercent(50)}
+          sx={{ flex: 2 }}
         />
       </Box>
 
-      <Box sx={headerStyles.formRow}>
+      <Box sx={FORM_ROW_SX}>
         <NumberInput
           required
-          label="Volume"
+          label='Volume'
           value={trade.volume}
           onChange={(val) => setTrade({ ...trade, volume: val })}
-          error={isSubmitted && (trade.volume === null || trade.volume === undefined || trade.volume === 0)}
-          helperText={isSubmitted && (trade.volume === null || trade.volume === undefined || trade.volume === 0) ? 'Must not be empty and must be greater than 0.' : ''}
-          sx={{
-            ...commonStyles.flexPercent(50),
-            '& .MuiInputBase-input': { fontFamily: 'monospace' }
-          }}
+          error={isVolumeInvalid}
+          helperText={isVolumeInvalid ? 'Must not be empty and must be greater than 0.' : ''}
+          sx={MONOSPACE_FLEX_INPUT_SX}
         />
+
         <NumberInput
           required
-          label="Float"
+          label='Float'
           value={trade.float}
           onChange={(val) => setTrade({ ...trade, float: val })}
-          error={isSubmitted && (trade.float === null || trade.float === undefined || trade.float === 0)}
-          helperText={isSubmitted && (trade.float === null || trade.float === undefined || trade.float === 0) ? 'Must not be empty and must be greater than 0.' : ''}
-          sx={{
-            ...commonStyles.flexPercent(50),
-            '& .MuiInputBase-input': { fontFamily: 'monospace' }
-          }}
+          error={isFloatInvalid}
+          helperText={isFloatInvalid ? 'Must not be empty and must be greater than 0.' : ''}
+          sx={MONOSPACE_FLEX_INPUT_SX}
         />
       </Box>
 
-      <Box sx={headerStyles.formRow}>
-        <TextField
-          label="News"
-          name="news"
-          value={trade.news}
-          onChange={handleNewsChange}
-          sx={commonStyles.flexPercent(75)}
-        />
+      <Box sx={FORM_ROW_SX}>
+        <TextField label='News' name='news' value={trade.news} onChange={handleNewsChange} sx={{ flex: 3 }} />
+
         <TimePicker
-          label="Time"
-          name="time"
+          label='Time'
+          name='time'
           value={trade.newsTime ? dayjs(trade.newsTime) : null}
           onChange={handleNewsTimeChange}
           slotProps={{
             textField: {
-              error: isSubmitted && isNullEmptyOrWhitespace(trade.newsTime) && !isNullEmptyOrWhitespace(trade.news),
-              helperText: isSubmitted && isNullEmptyOrWhitespace(trade.newsTime) && !isNullEmptyOrWhitespace(trade.news)
-                ? 'Please specify a time for the news'
-                : ''
-            }
+              error: isNewsTimeInvalid,
+              helperText: isNewsTimeInvalid ? 'Please specify a time for the news' : '',
+              sx: { flex: 1 },
+            },
           }}
         />
       </Box>

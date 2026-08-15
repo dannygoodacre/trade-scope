@@ -1,8 +1,9 @@
-import * as tradeRepo from '@/repositories/trade.repository';
-import * as executionRepo from '@/repositories/execution.repository';
+import { ExecutionData, PaginatedTradesResponse, TradeData } from '@trade-scope/shared/types';
+
 import { database } from '@/database';
 import { NotFoundError } from '@/error';
-import { ExecutionData, PaginatedTradesResponse, TradeData } from '@trade-tracker/shared/types';
+import * as executionRepo from '@/repositories/execution.repository';
+import * as tradeRepo from '@/repositories/trade.repository';
 
 /**
  * Create a new trade and its associated executions.
@@ -13,10 +14,10 @@ import { ExecutionData, PaginatedTradesResponse, TradeData } from '@trade-tracke
  * @return The ID of the new trade
  */
 export async function createTrade(tradeData: TradeData, executionsData: ExecutionData[]): Promise<number> {
-  return await database.transaction().execute(async trx => {
+  return await database.transaction().execute(async (trx) => {
     const trade = await tradeRepo.addTrade(tradeData, trx);
 
-    const executionsWithId = executionsData.map(execution => ({
+    const executionsWithId = executionsData.map((execution) => ({
       ...execution,
       tradeId: trade.id,
     }));
@@ -54,11 +55,11 @@ export async function getTrades(page: number, limit: number): Promise<PaginatedT
  * @param id The ID of the trade
  */
 export async function deleteTrade(id: number): Promise<void> {
-  if (!await tradeRepo.tradeExists(id)) {
+  if (!(await tradeRepo.tradeExists(id))) {
     throw new NotFoundError(`Trade '${id}' not found.`);
   }
 
-  await database.transaction().execute(async trx => {
+  await database.transaction().execute(async (trx) => {
     await executionRepo.deleteExecutionsByTradeId(id, trx);
 
     await tradeRepo.deleteTrade(id, trx);

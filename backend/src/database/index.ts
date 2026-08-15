@@ -2,7 +2,8 @@ import SQLite from 'better-sqlite3';
 import { Insertable, Kysely, ParseJSONResultsPlugin, Selectable, SqliteDialect, Transaction } from 'kysely';
 
 import config from '@/config';
-import { DB, Trades, Executions } from './db';
+
+import { DB, Executions, Trades } from './db';
 
 export const database = new Kysely<DB>({
   dialect: new SqliteDialect({

@@ -6,7 +6,7 @@ export const heroCard: SxProps<Theme> = {
   flexDirection: 'column',
   alignItems: 'center',
   textAlign: 'center',
-  border: 'none'
+  border: 'none',
 };
 
 export const heroTitle: SxProps<Theme> = {

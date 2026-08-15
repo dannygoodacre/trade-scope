@@ -1,6 +1,5 @@
+import { Side } from '@trade-scope/shared/enums';
 import { z } from 'zod';
-
-import { Side } from '@trade-tracker/shared/enums';
 
 export const ExecutionDataShape = z.strictObject({
   filled: z.number().positive(),

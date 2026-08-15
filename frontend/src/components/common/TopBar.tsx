@@ -1,7 +1,7 @@
-import { AppBar, Box, Button, Toolbar, Typography, useTheme } from '@mui/material';
-import ShowChartIcon from '@mui/icons-material/ShowChart';
 import AddIcon from '@mui/icons-material/Add';
+import ShowChartIcon from '@mui/icons-material/ShowChart';
 import TableViewIcon from '@mui/icons-material/TableView';
+import { AppBar, Box, Button, Toolbar, Typography, useTheme } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 
 export default function TopBar() {
@@ -11,9 +11,9 @@ export default function TopBar() {
 
   return (
     <AppBar
-      position="static"
+      position='static'
       elevation={0}
-      color="default"
+      color='default'
       sx={{
         backgroundColor: theme.palette.background.paper,
         backgroundImage: 'none',
@@ -22,8 +22,8 @@ export default function TopBar() {
     >
       <Toolbar sx={{ justifyContent: 'space-between', px: { xs: 2, sm: 4 } }}>
         <Box
-          component="a"
-          href="/"
+          component='a'
+          href='/'
           sx={{
             display: 'flex',
             alignItems: 'center',
@@ -32,34 +32,36 @@ export default function TopBar() {
             color: 'text.primary',
           }}
         >
-          <ShowChartIcon color="primary" sx={{ fontSize: 28 }} />
-          <Typography variant="h6" fontWeight="bold" letterSpacing={-0.5}>
-            Trade Tracker
+          <ShowChartIcon color='primary' sx={{ fontSize: 28 }} />
+          <Typography variant='h6' fontWeight='bold' letterSpacing={-0.5}>
+            Trade Scope
           </Typography>
         </Box>
 
         <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-          <Button
-            href="/trades"
-            variant="text"
-            color="inherit"
-            startIcon={<TableViewIcon />}
-            sx={{
-              fontWeight: 600,
-              textTransform: 'none',
-              borderRadius: 1.5,
-              px: 1.75,
-              py: 0.75,
-            }}
-          >
-            Browse
-          </Button>
-
-          {(location.pathname !== '/trades/new') && (
+          {location.pathname !== '/trades' && (
             <Button
-              href="/trades/new"
-              variant="contained"
-              color="primary"
+              href='/trades'
+              variant='text'
+              color='inherit'
+              startIcon={<TableViewIcon />}
+              sx={{
+                fontWeight: 600,
+                textTransform: 'none',
+                borderRadius: 1.5,
+                px: 1.75,
+                py: 0.75,
+              }}
+            >
+              Browse
+            </Button>
+          )}
+
+          {location.pathname !== '/trades/new' && (
+            <Button
+              href='/trades/new'
+              variant='contained'
+              color='primary'
               disableElevation
               startIcon={<AddIcon />}
               sx={{
