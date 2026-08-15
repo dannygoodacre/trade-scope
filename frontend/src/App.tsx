@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import Home from '@/pages/Home';
 import NewTrade from '@/pages/NewTrade';
+import RechartTest from '@/pages/RechartTest.tsx';
 import Trades from '@/pages/Trades';
 import theme from '@/styles/theme';
 
@@ -19,6 +20,7 @@ export default function App() {
             <Route path='/' element={<Home />} />
             <Route path='/trades' element={<Trades />} />
             <Route path='/trades/new' element={<NewTrade />} />
+            <Route path='/rechart-test' element={<RechartTest />} />
           </Routes>
         </BrowserRouter>
       </QueryClientProvider>
