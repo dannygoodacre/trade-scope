@@ -1,0 +1,3 @@
+### Get profit-loss
+GET http://localhost:3000/api/analytics/profit-loss?from=2021-08-01&to=2027-08-16&interval=day
+Content-Type: application/json

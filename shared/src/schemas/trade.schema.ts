@@ -1,8 +1,19 @@
 import { ExecutionDataShape, ExecutionShape } from '@trade-scope/shared/schemas/execution.schema';
 import { z } from 'zod';
 
+export const dateOnlySchema = z
+  .string()
+  .regex(/^\d{4}-\d{2}-\d{2}$/, 'Must follow YYYY-MM-DD format')
+  .refine((x) => {
+    const [year, month, day] = x.split('-').map(Number);
+
+    const date = new Date(Date.UTC(year, month - 1, day));
+
+    return date.getUTCFullYear() === year && date.getUTCMonth() + 1 === month && date.getUTCDate() === day;
+  }, 'Invalid calendar date');
+
 export const TradeDataShape = z.strictObject({
-  date: z.iso.date(),
+  date: dateOnlySchema,
   float: z.coerce.number().int().positive(),
   news: z.string().nullish(),
   newsTime: z.iso.datetime().nullish(),

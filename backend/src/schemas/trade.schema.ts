@@ -8,46 +8,41 @@ import { CreateTradeInput } from '@/types';
 
 export const CreateTradeSchema = TradeDataShape.extend({
   executions: z.array(CreateExecutionRequestSchema).min(2),
-})
-  .transform((body) => ({
-    ...body,
-    date: new Date(body.date).toISOString(),
-  }))
-  .superRefine((body, ctx) => {
-    if (new Date(body.date) > new Date()) {
-      ctx.addIssue({
-        code: 'custom',
-        message: "'date' cannot be in the future",
-        path: ['date'],
-      });
-    }
+}).superRefine((body, ctx) => {
+  if (new Date(body.date) > new Date()) {
+    ctx.addIssue({
+      code: 'custom',
+      message: "'date' cannot be in the future",
+      path: ['date'],
+    });
+  }
 
-    if (!newsFieldsAreSynced(body)) {
-      ctx.addIssue({
-        code: 'custom',
-        message: "Both 'news' and 'newsTime' must either be provided or omitted",
-        path: ['news'],
-      });
-    }
+  if (!newsFieldsAreSynced(body)) {
+    ctx.addIssue({
+      code: 'custom',
+      message: "Both 'news' and 'newsTime' must either be provided or omitted",
+      path: ['news'],
+    });
+  }
 
-    const hasRequiredSides = hasBuyAndSell(body.executions);
+  const hasRequiredSides = hasBuyAndSell(body.executions);
 
-    if (!hasRequiredSides) {
-      ctx.addIssue({
-        code: 'custom',
-        message: 'Must have at least one BUY and at least one SELL execution',
-        path: ['executions'],
-      });
-    }
+  if (!hasRequiredSides) {
+    ctx.addIssue({
+      code: 'custom',
+      message: 'Must have at least one BUY and at least one SELL execution',
+      path: ['executions'],
+    });
+  }
 
-    if (hasRequiredSides && !tradeIsClosed(body.executions)) {
-      ctx.addIssue({
-        code: 'custom',
-        message: 'Trade must be fully closed (net shares must be zero)',
-        path: ['executions'],
-      });
-    }
-  });
+  if (hasRequiredSides && !tradeIsClosed(body.executions)) {
+    ctx.addIssue({
+      code: 'custom',
+      message: 'Trade must be fully closed (net shares must be zero)',
+      path: ['executions'],
+    });
+  }
+});
 
 export const CreateTradeRequestSchema = z.strictObject({
   body: CreateTradeSchema,

@@ -3,21 +3,21 @@ POST http://localhost:3000/api/trades
 Content-Type: application/json
 
 {
-  "date": "2025-02-01",
+  "date": "2025-08-16",
   "float": 3000,
   "sector": "Technology",
   "symbol": "AAPL",
   "volume": 50000,
   "executions": [
     {
-      "filled": 10,
-      "madeAt": "foo",
+      "filled": 8,
+      "madeAt": "2025-02-01T01:00:00Z",
       "order": 8,
       "price": "1.23",
       "side": 1
     },
     {
-      "filled": 10,
+      "filled": 8,
       "madeAt": "2025-02-01T00:00:00Z",
       "order": 8,
       "price": "1.2",

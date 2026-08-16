@@ -1,62 +1,58 @@
-import { Box } from '@mui/material';
-import { CartesianGrid, Legend, Line, LineChart, XAxis, YAxis } from 'recharts';
-
-import TopBar from '@/components/common/TopBar.tsx';
-import * as styles from '@/styles/common.ts';
+import { useEffect, useState } from 'react';
+import { Box, CircularProgress } from '@mui/material';
+import { Bar, BarChart, CartesianGrid, Rectangle, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
 export default function RechartTest() {
-  const data = [
-    {
-      name: 'Page A',
-      uv: 400,
-      pv: 2400,
-      amt: 2400,
-    },
-    {
-      name: 'Page B',
-      uv: 300,
-      pv: 4567,
-      amt: 2400,
-    },
-    {
-      name: 'Page C',
-      uv: 320,
-      pv: 1398,
-      amt: 2400,
-    },
-    {
-      name: 'Page D',
-      uv: 200,
-      pv: 9800,
-      amt: 2400,
-    },
-    {
-      name: 'Page E',
-      uv: 278,
-      pv: 3908,
-      amt: 2400,
-    },
-    {
-      name: 'Page F',
-      uv: 189,
-      pv: 4800,
-      amt: 2400,
-    },
-  ];
+  const [data, setData] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('http://localhost:3000/api/analytics/profit-loss?from=2021-08-01&to=2027-08-16&interval=month')
+      .then((res) => res.json())
+      .then((json) => {
+        setData(json.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error('Fetch error:', err);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
-    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <TopBar />
-
-      <Box component='main' sx={{ ...styles.container, flex: 1, p: 4 }}>
-        <LineChart style={{ width: '100%', aspectRatio: 1.618 }} responsive data={data}>
-          <CartesianGrid />
-          <Line dataKey='uv' />
-          <XAxis dataKey='name' />
+    <Box sx={{ width: '100%', height: 400, p: 4 }}>
+      <ResponsiveContainer width='100%' height='100%'>
+        <BarChart data={data}>
+          <CartesianGrid strokeDasharray='3 3' />
+          <XAxis dataKey='date' />
           <YAxis />
-          <Legend />
-        </LineChart>
-      </Box>
+          <Tooltip />
+          <Bar
+            dataKey='netProfit'
+            shape={(props: any) => {
+              const value = props.payload.netProfit;
+
+              if (value === 0) {
+                const lineHeight = 3;
+
+                return <Rectangle {...props} y={props.y - lineHeight / 2} height={lineHeight} fill='#1976d2' />;
+              }
+
+              const fill = value > 0 ? '#2e7d32' : '#d32f2f';
+
+              return <Rectangle {...props} fill={fill} />;
+            }}
+          />
+        </BarChart>
+      </ResponsiveContainer>
     </Box>
   );
 }

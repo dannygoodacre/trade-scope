@@ -5,6 +5,8 @@ import * as tradeService from '@/services/trade.service';
 import type { CreateTradeRequest, DeleteTradeRequest, GetTradeRequest, TypedRequest } from '@/types';
 
 export async function createTrade(req: TypedRequest<CreateTradeRequest>, res: Response) {
+  console.log(typeof req.body.date);
+
   const { executions, ...tradeData } = req.body;
 
   const tradeId = await tradeService.createTrade(tradeData, executions);
