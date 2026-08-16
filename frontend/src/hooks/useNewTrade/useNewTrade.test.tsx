@@ -7,14 +7,15 @@ import { addTrade } from '@/api/trade';
 import useNewTrade from './useNewTrade';
 
 import type { NewTrade } from '@trade-tracker/shared/types';
-import type { JSX, ReactNode } from 'react';
+import type { JSX, PropsWithChildren } from 'react';
+import type { MockInstance } from 'vitest';
 
 vi.mock('@/api/trade', () => ({
   addTrade: vi.fn(),
 }));
 
 const CreateTestQueryClientProvider = (queryClient: QueryClient) => {
-  return ({ children }: { children: ReactNode }) => (
+  return ({ children }: PropsWithChildren) => (
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   );
 };
@@ -22,7 +23,9 @@ const CreateTestQueryClientProvider = (queryClient: QueryClient) => {
 describe('useNewTrade', () => {
   let queryClient: QueryClient;
 
-  let wrapper: ({ children }: { children: ReactNode }) => JSX.Element;
+  let wrapper: ({ children }: PropsWithChildren) => JSX.Element;
+
+  let invalidateQueriesSpy: MockInstance;
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -35,25 +38,41 @@ describe('useNewTrade', () => {
     });
 
     wrapper = CreateTestQueryClientProvider(queryClient);
+
+    invalidateQueriesSpy = vi.spyOn(queryClient, 'invalidateQueries');
   });
 
   it('handles error when addTrade fails', async () => {
     // Arrange
+    const requestPayload: NewTrade = {
+      date: '2026-08-15',
+      float: 123,
+      sector: 'Test Sector',
+      symbol: 'TEST',
+      volume: 456,
+      executions: [],
+    };
+
     const testError = new Error('Test Error');
 
     vi.mocked(addTrade).mockRejectedValueOnce(testError);
 
+    // Act
     const { result } = renderHook(() => useNewTrade(), { wrapper });
 
-    // Act
     act(() => {
-      result.current.mutate({} as NewTrade);
+      result.current.mutate(requestPayload);
     });
 
     // Assert
     await waitFor(() => expect(result.current.isError).toBe(true));
 
-    expect(result.current.error).toEqual(testError);
+    expect.soft(result.current.error).toEqual(testError);
+
+    expect.soft(addTrade).toHaveBeenCalledWith(requestPayload);
+    expect.soft(addTrade).toHaveBeenCalledTimes(1);
+
+    expect.soft(invalidateQueriesSpy).toHaveBeenCalledTimes(0);
   });
 
   it('calls addTrade and invalidates the trades query on success', async () => {
@@ -69,11 +88,9 @@ describe('useNewTrade', () => {
 
     vi.mocked(addTrade).mockResolvedValueOnce();
 
-    const invalidateQueriesSpy = vi.spyOn(queryClient, 'invalidateQueries');
-
+    // Act
     const { result } = renderHook(() => useNewTrade(), { wrapper });
 
-    // Act
     act(() => {
       result.current.mutate(requestPayload);
     });
@@ -81,10 +98,10 @@ describe('useNewTrade', () => {
     // Assert
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
-    expect(addTrade).toHaveBeenCalledWith(requestPayload);
+    expect.soft(addTrade).toHaveBeenCalledWith(requestPayload);
+    expect.soft(addTrade).toHaveBeenCalledTimes(1);
 
-    expect(addTrade).toHaveBeenCalledTimes(1);
-
-    expect(invalidateQueriesSpy).toHaveBeenCalledWith({ queryKey: ['trades'] });
+    expect.soft(invalidateQueriesSpy).toHaveBeenCalledWith({ queryKey: ['trades'] });
+    expect.soft(invalidateQueriesSpy).toHaveBeenCalledTimes(1);
   });
 });
