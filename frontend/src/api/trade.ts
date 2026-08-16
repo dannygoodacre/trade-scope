@@ -1,22 +1,22 @@
 import { get, post } from './client';
 
-import type { ExecutionData, PaginatedTradesResponse, TradeData } from '@trade-scope/shared/types';
+import type { NewTrade, PaginatedTradesResponse } from '@trade-scope/shared/types';
 
-export const addTrade = (trade: TradeData, executionsData: ExecutionData[]): Promise<void> =>
+export const addTrade = (newTrade: NewTrade): Promise<void> =>
   post<void>('/api/trades', {
-    date: trade.date,
-    float: trade.float,
-    ...(trade.news !== '' && { news: trade.news }),
-    ...(trade.newsTime !== '' && { newsTime: trade.newsTime }),
-    sector: trade.sector,
-    symbol: trade.symbol,
-    volume: trade.volume,
-    executions: executionsData.map((x) => ({
-      filled: x.filled,
-      madeAt: x.madeAt,
-      order: x.order,
-      price: x.price,
-      side: x.side,
+    date: newTrade.date,
+    float: newTrade.float,
+    ...(newTrade.news !== '' && { news: newTrade.news }),
+    ...(newTrade.newsTime !== '' && { newsTime: newTrade.newsTime }),
+    sector: newTrade.sector,
+    symbol: newTrade.symbol,
+    volume: newTrade.volume,
+    executions: newTrade.executions.map((execution) => ({
+      filled: execution.filled,
+      madeAt: execution.madeAt,
+      order: execution.order,
+      price: execution.price,
+      side: execution.side,
     })),
   });
 

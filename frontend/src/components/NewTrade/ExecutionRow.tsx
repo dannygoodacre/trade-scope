@@ -9,8 +9,8 @@ import type { Side } from '@trade-scope/shared/enums';
 import type { Execution } from '@trade-scope/shared/types';
 import type { Dayjs } from 'dayjs';
 
-interface TransactionRowProps {
-  transaction: Execution;
+interface ExecutionRowProps {
+  execution: Execution;
   isSelected: boolean;
   onChange: (id: number, fieldName: string, value: string | number | Side | Dayjs) => void;
   onClick: (id: number) => void;
@@ -20,14 +20,14 @@ const MONOSPACE_INPUT_SX = {
   '& .MuiInputBase-input': { fontFamily: 'monospace' },
 } as const;
 
-export default function TransactionRow({ transaction, isSelected, onChange, onClick }: TransactionRowProps) {
-  const handleTimeChange = (value: Dayjs | null) => onChange(transaction.id, 'madeAt', value?.toISOString() ?? '');
+export default function ExecutionRow({ execution, isSelected, onChange, onClick }: ExecutionRowProps) {
+  const handleTimeChange = (value: Dayjs | null) => onChange(execution.id, 'madeAt', value?.toISOString() ?? '');
 
   return (
     <TableRow
       role='checkbox'
       tabIndex={-1}
-      key={transaction.id}
+      key={execution.id}
       selected={isSelected}
       sx={{
         '&:hover': {
@@ -39,44 +39,42 @@ export default function TransactionRow({ transaction, isSelected, onChange, onCl
       }}
     >
       <TableCell padding='checkbox'>
-        <Checkbox color='primary' checked={isSelected} onClick={() => onClick(transaction.id)} />
+        <Checkbox color='primary' checked={isSelected} onClick={() => onClick(execution.id)} />
       </TableCell>
 
       <TableCell>
-        <SideToggleButton id={transaction.id} onToggle={(id, value) => onChange(id, 'side', value)} />
+        <SideToggleButton id={execution.id} onToggle={(id, value) => onChange(id, 'side', value)} />
       </TableCell>
 
       <TableCell>
         <NumberInput
-          value={
-            typeof transaction.price === 'number' ? transaction.price : parseFloat(transaction.price as string) || 0
-          }
-          onChange={(val) => onChange(transaction.id, 'price', val.toString())}
+          value={typeof execution.price === 'number' ? execution.price : parseFloat(execution.price as string) || 0}
+          onChange={(val) => onChange(execution.id, 'price', val.toString())}
           sx={MONOSPACE_INPUT_SX}
         />
       </TableCell>
 
       <TableCell>
         <NumberInput
-          value={transaction.order}
+          value={execution.order}
           step={1}
-          onChange={(val) => onChange(transaction.id, 'order', val)}
+          onChange={(val) => onChange(execution.id, 'order', val)}
           sx={MONOSPACE_INPUT_SX}
         />
       </TableCell>
 
       <TableCell>
         <NumberInput
-          value={transaction.filled}
+          value={execution.filled}
           step={1}
-          onChange={(val) => onChange(transaction.id, 'filled', val)}
+          onChange={(val) => onChange(execution.id, 'filled', val)}
           sx={MONOSPACE_INPUT_SX}
         />
       </TableCell>
 
       <TableCell>
         <TimePicker
-          value={transaction.madeAt ? dayjs(transaction.madeAt) : null}
+          value={execution.madeAt ? dayjs(execution.madeAt) : null}
           onChange={handleTimeChange}
           views={['hours', 'minutes', 'seconds']}
         />

@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 
 import TopBar from '@/components/common/TopBar';
-import TradeForm from '@/components/TradeForm';
+import NewTradeComponent from '@/components/NewTrade';
 import * as styles from '@/styles/common';
 
 export default function NewTrade() {
@@ -10,7 +10,7 @@ export default function NewTrade() {
       <TopBar />
 
       <Box sx={styles.container}>
-        <TradeForm />
+        <NewTradeComponent />
       </Box>
     </Box>
   );
