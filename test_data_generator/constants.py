@@ -1,4 +1,4 @@
-NUM_TRADES = 100_000
+NUM_TRADES = 100
 DB_FILENAME = "trades.db"
 
 SIDE_BUY = 0

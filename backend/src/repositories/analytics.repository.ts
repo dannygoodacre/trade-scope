@@ -10,7 +10,7 @@ export const getTrades = (from: string, to: string, symbol?: string, db: QueryBu
     .select([
       'date',
       sql<number>`(
-        SELECT COALESCE(SUM(CASE WHEN side = 1 THEN price * volume ELSE -(price * volume) END), 0)
+        SELECT COALESCE(SUM(CASE WHEN side = 1 THEN price * filled ELSE -(price * filled) END), 0)
         FROM executions
         WHERE executions.tradeId = trades.id
       )`.as('netProfit'),

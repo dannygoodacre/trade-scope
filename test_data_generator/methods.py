@@ -42,13 +42,10 @@ def create_tables(cursor):
 
 def generate_trade(trade_id: int):
     sector = random.choice(list(SYMBOLS.keys()))
-
     trade_date = random_date_in_past(3 * 365)
-
     trade_date_str = trade_date.strftime("%Y-%m-%d")
 
     has_news = random.choice([True, False])
-
     if has_news:
         news = random.choice(NEWS_HEADLINES)
         news_time = datetime.combine(
@@ -59,69 +56,74 @@ def generate_trade(trade_id: int):
             ),
             tzinfo=timezone.utc
         ).isoformat()
-
     else:
         news = None
         news_time = None
 
     total_shares = 100 * random.randint(1, 10)
-
     base_price = round(random.uniform(10.0, 300.0), 2)
+
+    # Target overall trade PnL within [-1000, 1000]
+    target_pnl = round(random.uniform(-1000.0, 1000.0), 2)
+
+    # Cap maximum loss so exit price cannot drop below $0.01
+    max_possible_loss = (base_price - 0.01) * total_shares
+    if target_pnl < -max_possible_loss:
+        target_pnl = -round(max_possible_loss, 2)
+
+    pnl_per_share = target_pnl / total_shares
 
     if random.choice([True, False]):
         first = total_shares // 2
-
         buys = [first, total_shares - first]
-
     else:
         buys = [total_shares]
 
     if random.choice([True, False]):
         first = total_shares // 2
-
         sells = [first, total_shares - first]
-
     else:
         sells = [total_shares]
 
     executions = []
-
-    order = 1
-
     base_time = datetime.combine(
         trade_date, datetime.min.time().replace(hour=9, minute=30), tzinfo=timezone.utc
     )
 
-    for shares in buys:
+    # BUY Executions
+    for filled_shares in buys:
         fill_time = base_time + timedelta(minutes=random.randint(0, 30))
+
+        # 'order' represents requested quantity; 'filled' <= 'order'
+        ordered_shares = filled_shares + random.choice([0, 10, 25, 50])
+
         executions.append({
             "side": SIDE_BUY,
             "price": f"{base_price:.2f}",
-            "order": order,
-            "filled": shares,
+            "order": ordered_shares,
+            "filled": filled_shares,
             "madeAt": fill_time.isoformat(),
             "tradeId": trade_id,
         })
 
-        order += 1
-
-    for shares in sells:
+    # SELL Executions
+    for filled_shares in sells:
         fill_time = base_time + timedelta(minutes=random.randint(31, 120))
 
-        pnl = random.uniform(-2.0, 5.0)
+        jitter = random.uniform(-0.05, 0.05) if len(sells) > 1 else 0.0
+        exit_price = max(0.01, round(base_price + pnl_per_share + jitter, 2))
 
-        exit_price = max(0.01, round(base_price + pnl, 2))
+        # 'order' represents requested quantity; 'filled' <= 'order'
+        ordered_shares = filled_shares + random.choice([0, 10, 25, 50])
 
         executions.append({
             "side": SIDE_SELL,
             "price": f"{exit_price:.2f}",
-            "order": order,
-            "filled": shares,
+            "order": ordered_shares,
+            "filled": filled_shares,
             "madeAt": fill_time.isoformat(),
             "tradeId": trade_id,
         })
-
-        order += 1
 
     return {
         "id": trade_id,

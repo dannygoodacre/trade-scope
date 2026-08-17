@@ -7,7 +7,7 @@ export default function RechartTest() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/analytics/profit-loss?from=2021-08-01&to=2027-08-16&interval=month')
+    fetch('http://localhost:3000/api/analytics/profit-loss?from=2025-08-01&to=2027-08-16&interval=week')
       .then((res) => res.json())
       .then((json) => {
         setData(json.data);
